@@ -1,0 +1,16 @@
+# Local PocketBase runtime and database (can contain patient data and secrets)
+/pocketbase/pocketbase
+/pocketbase/pocketbase.exe
+/pocketbase/pb_data/
+/pocketbase/*.zip
+/pocketbase/CHANGELOG.md
+/pocketbase/LICENSE.md
+
+# Common local files
+.env
+.env.*
+!.env.example
+/backups/
+.DS_Store
+Thumbs.db
+*.log

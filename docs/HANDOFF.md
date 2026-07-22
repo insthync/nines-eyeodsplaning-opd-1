@@ -1,0 +1,55 @@
+# Current handoff
+
+Last updated: 2026-07-22
+
+## Repository state
+
+- Branch: `main`.
+- Remote: `origin` at `https://github.com/insthync/nines-eyeodsplaning-opd-1.git`.
+- Git history currently contains only the old initial commit.
+- The current application, PocketBase integration, scripts, and documentation are uncommitted working-tree changes. Run `git status --short`; do not assume a fresh clone contains this work until it is committed and pushed.
+
+## Implemented
+
+- Thai responsive OR planning board inspired by the original Canva site.
+- Daily, monthly, dashboard, and print views.
+- Add/edit/delete case forms and client-side overlap checks.
+- PocketBase REST adapter with session login and role-aware UI.
+- `viewer`, `editor`, and `admin` users.
+- PocketBase migration for `users` and `surgery_cases` rules/schema.
+- Server hook rejecting overlapping room schedules.
+- Windows PowerShell and Linux/macOS Bash download/setup/start scripts.
+- Same-origin frontend/API serving suitable for a small VPS.
+- Repository-owned continuation context: `AGENTS.md`, `DESIGN.md`, focused `docs/`, and a portable Codex skill.
+
+## Verified during implementation
+
+- JavaScript syntax for frontend, migration, and hook.
+- PowerShell parsing and script behavior.
+- Bash syntax, LF line endings, and a full Linux-container setup/start flow.
+- Migration and setup idempotency with temporary data.
+- API behavior: editor/admin write, viewer read-only, conflict rejection.
+- Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
+- `git diff --check`.
+
+## Open decisions and risks
+
+1. `config.js` currently sets `requireAuth: false`, but PocketBase rules require authentication for reads and writes. Decide the desired logged-out experience, likely restore `true`, then rerun browser tests.
+2. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
+3. No automated test suite or CI workflow exists.
+4. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
+5. Hosting was discussed but not provisioned. Hetzner CX23 was recommended; pricing and region must be rechecked before purchase.
+6. Formal privacy/security/compliance review is required before storing real patient data.
+7. The original reference site should be treated as visual/workflow inspiration, not copied assets.
+
+## Suggested next work
+
+1. Resolve `requireAuth` and retest logged-out, viewer, editor, and admin flows.
+2. Review and commit the current working tree, then push it so another device can recover it.
+3. Add automated tests for overlap logic, role handling, and PocketBase API rules.
+4. Add a production deployment package for the selected host.
+5. Add encrypted backup/restore automation and a restore drill.
+
+## Handoff maintenance
+
+After each meaningful task, replace stale statements here with observed state and record the exact validation performed. Never include credentials, tokens, patient records, or private infrastructure details.

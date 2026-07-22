@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ตารางบริหารจัดการคิวผ่าตัดสำหรับทีม OPD และห้องผ่าตัด"
+    />
+    <meta name="theme-color" content="#0f7185" />
+    <title>OR Planning Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-grid" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="title-wrap">
+          <p class="eyebrow">OPERATING ROOM · PLANNING BOARD</p>
+          <h1>ตารางบริหารจัดการคิวผ่าตัด</h1>
+          <p class="subtitle">มองภาพรวม วางแผนห้อง และจัดการเคสในที่เดียว</p>
+        </div>
+
+        <div class="header-actions">
+          <button
+            id="sync-status"
+            class="sync-chip"
+            type="button"
+            aria-label="สถานะการจัดเก็บข้อมูล"
+          >
+            <span class="sync-dot" aria-hidden="true"></span>
+            <span id="sync-status-label">กำลังเตรียมข้อมูล</span>
+          </button>
+          <button
+            id="add-case-button"
+            class="icon-button primary"
+            type="button"
+            aria-label="เพิ่มเคสผ่าตัด"
+            title="เพิ่มเคสผ่าตัด"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+          <button
+            id="print-button"
+            class="icon-button"
+            type="button"
+            aria-label="พิมพ์ตาราง"
+            title="พิมพ์ตาราง"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <path d="M6 14h12v7H6z" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="planner-toolbar" aria-label="ตัวควบคุมตาราง">
+        <nav class="view-switcher" aria-label="เลือกรูปแบบการแสดงตาราง">
+          <button class="view-tab active" type="button" data-view="daily" aria-label="รายวัน" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16v15H4zM8 3v4M16 3v4M4 10h16" />
+              <path d="M8 14h2M14 14h2" />
+            </svg>
+            <span>รายวัน</span>
+          </button>
+          <button class="view-tab" type="button" data-view="monthly" aria-label="รายเดือน" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16v15H4zM8 3v4M16 3v4M4 10h16" />
+              <path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01M16 17h.01" />
+            </svg>
+            <span>รายเดือน</span>
+          </button>
+          <button class="view-tab" type="button" data-view="dashboard" aria-label="ภาพรวม" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h6v7H4zM14 4h6v4h-6zM14 12h6v8h-6zM4 15h6v5H4z" />
+            </svg>
+            <span>ภาพรวม</span>
+          </button>
+        </nav>
+
+        <div class="date-navigator" aria-label="เลือกช่วงเวลาที่แสดง">
+          <button id="previous-period" class="small-button" type="button" aria-label="ช่วงเวลาก่อนหน้า">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+          </button>
+          <button id="today-button" class="today-button" type="button">วันนี้</button>
+          <button id="next-period" class="small-button" type="button" aria-label="ช่วงเวลาถัดไป">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
+          <p id="date-display" class="date-display" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="guide-bar" aria-label="คำแนะนำและสถานะ">
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m4 4 7.4 16 2.1-6.5L20 11.4z" />
+            <path d="m14 14 5 5" />
+          </svg>
+          เลือกช่องเวลาเพื่อเพิ่มเคส หรือเลือกการ์ดเคสเพื่อดูรายละเอียด
+        </p>
+        <div class="legend" aria-label="คำอธิบายสถานะ">
+          <span><i class="status-swatch confirmed"></i>OR รับเคสแล้ว</span>
+          <span><i class="status-swatch waitlist"></i>รอจัดห้อง</span>
+          <span><i class="status-swatch coordination"></i>รอประสานงาน</span>
+        </div>
+      </section>
+
+      <section id="daily-view" class="view-panel" aria-label="ตารางคิวผ่าตัดรายวัน">
+        <div class="timetable-scroll">
+          <div id="calendar-grid" class="schedule-grid"></div>
+        </div>
+      </section>
+
+      <section id="monthly-view" class="view-panel" aria-label="ปฏิทินคิวผ่าตัดรายเดือน" hidden>
+        <div class="month-header">
+          <div>
+            <p class="section-kicker">MONTHLY CAPACITY</p>
+            <h2 id="monthly-heading"></h2>
+          </div>
+          <p id="month-summary" class="month-summary"></p>
+        </div>
+        <div id="month-grid" class="month-grid"></div>
+      </section>
+
+      <section id="dashboard-view" class="view-panel dashboard-panel" aria-label="ภาพรวมคิวผ่าตัด" hidden>
+        <div class="dashboard-heading-row">
+          <div>
+            <p class="section-kicker">MONTHLY SNAPSHOT</p>
+            <h2 id="dashboard-heading"></h2>
+          </div>
+          <p>ภาพรวมภาระงานและสถานะของทุกห้องผ่าตัด</p>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card total">
+            <span class="metric-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM8 3v4M16 3v4M4 10h16" /></svg>
+            </span>
+            <div><p>เคสทั้งหมด</p><strong id="metric-total">0</strong><small>เคสในเดือนนี้</small></div>
+          </article>
+          <article class="metric-card confirmed">
+            <span class="metric-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg>
+            </span>
+            <div><p>รับเคสแล้ว</p><strong id="metric-confirmed">0</strong><small>พร้อมเข้าตาราง OR</small></div>
+          </article>
+          <article class="metric-card waitlist">
+            <span class="metric-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+            </span>
+            <div><p>รอจัดห้อง</p><strong id="metric-waitlist">0</strong><small>ต้องจัดสรรเวลา</small></div>
+          </article>
+          <article class="metric-card coordination">
+            <span class="metric-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 1 8 0v3a4 4 0 0 1-8 0z" /><path d="M5 20c1.5-3 4-4 7-4s5.5 1 7 4" /></svg>
+            </span>
+            <div><p>รอประสานงาน</p><strong id="metric-coordination">0</strong><small>ติดตามข้อมูลเพิ่มเติม</small></div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-card">
+            <div class="card-heading">
+              <div><p class="section-kicker">STATUS MIX</p><h3>สัดส่วนสถานะ</h3></div>
+            </div>
+            <div id="status-breakdown" class="status-breakdown"></div>
+          </article>
+
+          <article class="dashboard-card">
+            <div class="card-heading">
+              <div><p class="section-kicker">BUSIEST DAYS</p><h3>วันที่มีเคสมากที่สุด</h3></div>
+            </div>
+            <div id="busy-days-list" class="busy-days-list"></div>
+          </article>
+
+          <article class="dashboard-card usage-card">
+            <div class="card-heading">
+              <div><p class="section-kicker">ROOM LOAD</p><h3>ชั่วโมงใช้งานห้องผ่าตัด</h3></div>
+            </div>
+            <div id="room-usage" class="room-usage"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div id="case-modal" class="modal" hidden>
+      <button class="modal-backdrop" type="button" data-close-modal aria-label="ปิดหน้าต่าง"></button>
+      <section class="modal-card case-modal-card" role="dialog" aria-modal="true" aria-labelledby="case-form-title">
+        <header class="modal-header">
+          <div>
+            <p class="section-kicker">SURGERY CASE</p>
+            <h2 id="case-form-title">เพิ่มเคสผ่าตัด</h2>
+          </div>
+          <button id="close-modal" class="icon-button compact" type="button" aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <form id="case-form" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>วันผ่าตัด</span>
+              <input id="surgery-date" name="surgery_date" type="date" required />
+            </label>
+            <label class="field">
+              <span>ห้องผ่าตัด</span>
+              <select id="operating-room" name="operating_room" required>
+                <option value="OR 1">OR 1</option>
+                <option value="OR 2">OR 2</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>เวลาเริ่ม</span>
+              <select id="start-time" name="start_time" required></select>
+            </label>
+            <label class="field">
+              <span>ระยะเวลาโดยประมาณ</span>
+              <select id="duration" name="duration" required>
+                <option value="30">30 นาที</option>
+                <option value="60" selected>60 นาที</option>
+                <option value="90">90 นาที</option>
+                <option value="120">2 ชั่วโมง</option>
+                <option value="180">3 ชั่วโมง</option>
+                <option value="240">4 ชั่วโมง</option>
+              </select>
+            </label>
+            <label class="field full">
+              <span>รายชื่อผู้ป่วย (ชื่อ–นามสกุล)</span>
+              <input
+                id="patient-name"
+                name="patient_name"
+                type="text"
+                placeholder="กรอกชื่อและนามสกุลผู้ป่วย"
+                autocomplete="off"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>HN</span>
+              <input id="hn" name="hn" type="text" placeholder="ตัวอย่าง: HN-000123" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span>แพทย์ผู้ทำหัตถการ</span>
+              <input id="doctor" name="doctor" type="text" placeholder="ชื่อแพทย์" autocomplete="off" required />
+            </label>
+            <label class="field full">
+              <span>หัตถการ</span>
+              <textarea
+                id="procedure"
+                name="procedure"
+                rows="3"
+                placeholder="ระบุชื่อหัตถการหรือรายละเอียดสำคัญ"
+                required
+              ></textarea>
+            </label>
+            <label class="field">
+              <span>ประเภทการระงับความรู้สึก</span>
+              <select id="anesthesia" name="anesthesia" required>
+                <option value="general">ดมยาสลบ</option>
+                <option value="local">ฉีดยาชา</option>
+                <option value="regional">ระงับความรู้สึกเฉพาะส่วน</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>สถานะ</span>
+              <select id="status" name="status" required>
+                <option value="confirmed">OR รับเคสแล้ว</option>
+                <option value="waitlist">รอจัดห้อง</option>
+                <option value="coordination">รอประสานงาน</option>
+              </select>
+            </label>
+          </div>
+
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+
+          <footer class="modal-actions">
+            <button id="delete-case-button" class="button danger ghost" type="button" hidden>ลบเคส</button>
+            <span class="action-spacer"></span>
+            <button id="cancel-button" class="button secondary" type="button">ยกเลิก</button>
+            <button id="save-case-button" class="button primary" type="submit">
+              <span class="button-label">บันทึกลงตาราง</span>
+              <span class="button-loader" aria-hidden="true"></span>
+            </button>
+          </footer>
+        </form>
+      </section>
+    </div>
+
+    <div id="delete-modal" class="modal" hidden>
+      <button class="modal-backdrop" type="button" data-close-delete aria-label="ปิดหน้าต่าง"></button>
+      <section class="modal-card confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="delete-title">
+        <div class="danger-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01" /><path d="M10.3 3.8 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.8a2 2 0 0 0-3.4 0z" /></svg>
+        </div>
+        <h2 id="delete-title">ลบเคสนี้ใช่ไหม</h2>
+        <p>ข้อมูลเคสจะถูกนำออกจากตาราง และไม่สามารถย้อนกลับได้</p>
+        <div class="confirm-actions">
+          <button id="keep-case-button" class="button secondary" type="button">เก็บเคสไว้</button>
+          <button id="confirm-delete-button" class="button danger" type="button">ลบเคส</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="auth-modal" class="modal" hidden>
+      <button class="modal-backdrop" type="button" data-close-auth aria-label="ปิดหน้าต่าง"></button>
+      <section class="modal-card auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <header class="modal-header">
+          <div>
+            <h2 id="auth-title">เข้าสู่ระบบสำหรับเจ้าหน้าที่</h2>
+          </div>
+          <button id="close-auth" class="icon-button compact" type="button" aria-label="ปิดหน้าต่าง">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+        <form id="auth-form">
+          <label class="field">
+            <span>อีเมล</span>
+            <input id="auth-identity" name="identity" type="text" autocomplete="username" required />
+          </label>
+          <label class="field">
+            <span>รหัสผ่าน</span>
+            <input id="auth-password" name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <p id="auth-error" class="form-error" role="alert" hidden></p>
+          <div class="confirm-actions auth-actions">
+            <button id="logout-button" class="button danger ghost" type="button" hidden>ออกจากระบบ</button>
+            <button id="login-button" class="button primary" type="submit">เข้าสู่ระบบ</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <template id="empty-state-template">
+      <div class="empty-state">
+        <span class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM8 3v4M16 3v4M4 10h16" /><path d="M9 15h6" /></svg>
+        </span>
+        <p></p>
+      </div>
+    </template>
+  </body>
+</html>

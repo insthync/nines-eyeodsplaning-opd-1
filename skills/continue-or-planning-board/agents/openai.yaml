@@ -1,0 +1,4 @@
+interface:
+  display_name: "Continue OR Planning Board"
+  short_description: "Continue development across devices and sessions"
+  default_prompt: "Use $continue-or-planning-board to inspect the project context and continue the next requested change safely."
