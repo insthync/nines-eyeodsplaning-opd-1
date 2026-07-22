@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="สร้างบัญชีใหม่สำหรับ OR Planning Board"
+    />
+    <meta name="theme-color" content="#0f7185" />
+    <title>สร้างบัญชีใหม่ · OR Planning Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./register.css" />
+    <script src="./config.js" defer></script>
+    <script src="./register.js" defer></script>
+  </head>
+  <body class="registration-page">
+    <div class="page-grid" aria-hidden="true"></div>
+
+    <main class="registration-shell">
+      <a class="registration-back" href="./index.html" aria-label="กลับไปหน้าตารางผ่าตัด">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        กลับไปหน้าตาราง
+      </a>
+
+      <section class="registration-card" aria-labelledby="registration-title">
+        <div class="registration-brand" aria-hidden="true">
+          <span class="registration-mark">
+            <svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM8 3v4M16 3v4M4 10h16" /><path d="M8 15h3M14 15h2" /></svg>
+          </span>
+          <div>
+            <p>OPERATING ROOM</p>
+            <strong>Planning Board</strong>
+          </div>
+        </div>
+
+        <div id="registration-form-panel">
+          <header class="registration-heading">
+            <p class="section-kicker">VIEWER REGISTRATION</p>
+            <h1 id="registration-title">สร้างบัญชีผู้ชม</h1>
+            <p>บัญชีใหม่ดูตารางและรายละเอียดเคสได้ แต่ไม่สามารถเพิ่ม แก้ไข หรือลบข้อมูล</p>
+          </header>
+
+          <div class="viewer-notice">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V6z" /><path d="m8.5 12 2.2 2.2 4.8-5" /></svg>
+            <span>ผู้ดูแลระบบสามารถเปลี่ยนสิทธิ์ของคุณภายหลังได้</span>
+          </div>
+
+          <form id="registration-form" novalidate>
+            <label class="field">
+              <span>ชื่อที่แสดง</span>
+              <input
+                id="registration-name"
+                name="name"
+                type="text"
+                maxlength="120"
+                autocomplete="name"
+                placeholder="ชื่อ–นามสกุล"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>อีเมล</span>
+              <input
+                id="registration-email"
+                name="email"
+                type="email"
+                maxlength="255"
+                autocomplete="email"
+                inputmode="email"
+                placeholder="name@example.org"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>รหัสผ่าน</span>
+              <input
+                id="registration-password"
+                name="password"
+                type="password"
+                minlength="8"
+                maxlength="72"
+                autocomplete="new-password"
+                aria-describedby="password-help"
+                required
+              />
+              <small id="password-help">อย่างน้อย 8 ตัวอักษร</small>
+            </label>
+            <label class="field">
+              <span>ยืนยันรหัสผ่าน</span>
+              <input
+                id="registration-password-confirm"
+                name="passwordConfirm"
+                type="password"
+                minlength="8"
+                maxlength="72"
+                autocomplete="new-password"
+                required
+              />
+            </label>
+
+            <label class="registration-honeypot" aria-hidden="true" inert>
+              <span>Website</span>
+              <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            </label>
+
+            <p id="registration-error" class="form-error" role="alert" hidden></p>
+            <button id="registration-submit" class="button primary registration-submit" type="submit">
+              <span class="button-label">สร้างบัญชีผู้ชม</span>
+              <span class="button-loader" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <p class="registration-login">มีบัญชีแล้ว? <a href="./index.html">กลับไปเข้าสู่ระบบ</a></p>
+        </div>
+
+        <div id="registration-success" class="registration-success" role="status" hidden>
+          <span class="success-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg>
+          </span>
+          <p class="section-kicker">REGISTRATION COMPLETE</p>
+          <h1>สร้างบัญชีแล้ว</h1>
+          <p><strong id="registered-name"></strong> สามารถเข้าสู่ระบบในฐานะผู้ชมได้ทันที</p>
+          <a class="button primary success-action" href="./index.html">ไปที่หน้าเข้าสู่ระบบ</a>
+        </div>
+      </section>
+
+      <p class="registration-footnote">อย่าใช้รหัสผ่านเดียวกับบัญชีสำคัญอื่น</p>
+    </main>
+  </body>
+</html>

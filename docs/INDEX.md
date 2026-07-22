@@ -21,8 +21,11 @@ index.html                    Static Thai UI and modal markup
 styles.css                   Responsive, dashboard, modal, and print styling
 app.js                       State, rendering, auth, roles, validation, and CRUD
 config.js                    Runtime PocketBase/auth configuration
+register.html                Dedicated viewer-registration page
+register.css                 Responsive registration-page styling
+register.js                  Registration validation and custom API client
 pocketbase/pb_migrations/    Versioned PocketBase schema and API rules
-pocketbase/pb_hooks/         Server-side schedule-conflict validation
+pocketbase/pb_hooks/         Server-side registration and schedule validation
 scripts/                     Windows and Unix download/setup/start scripts
 skills/                      Portable project continuation skill
 ```
@@ -33,7 +36,7 @@ skills/                      Portable project continuation skill
 - PocketBase 0.39.8 supplies SQLite persistence, REST APIs, and authentication.
 - Frontend and PocketBase default to the same origin.
 - `users` roles are `viewer`, `editor`, and `admin`.
+- Public self-registration always creates an active, unverified `viewer` through a narrow custom route.
 - `surgery_cases` is private to active authenticated users; writes require editor or admin.
 - The frontend auth token is stored in `sessionStorage`, not persistent local storage.
 - `pb_data` is local/production state and is intentionally ignored by Git.
-

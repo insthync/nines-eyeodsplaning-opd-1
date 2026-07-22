@@ -30,6 +30,14 @@ unset PB_SUPERUSER_PASSWORD PB_STAFF_PASSWORD
 bash scripts/setup-pocketbase.sh --skip-download
 ```
 
+## Self-registration and promotion
+
+Visitors can open `/register.html` from the login dialog and create an account. Every self-registered account starts as an active `viewer`; the page cannot request `editor` or `admin` rights.
+
+To promote an existing viewer, sign in to the PocketBase dashboard as a superuser, open Collections → users, select the account, and change `role` to `editor` or `admin`. Alternatively, rerun the setup script with that email and the desired `PB_STAFF_ROLE`; note that the setup script also updates the account password, name, and active state.
+
+Before public deployment, configure rate limiting for `POST /api/or-planner/register` at PocketBase or the reverse proxy and monitor unexpected registration volume.
+
 ## Data location
 
 The default database directory is `pocketbase/pb_data`. Override it with `--data-dir` or `PB_DATA_DIRECTORY`. Production should use a persistent disk with explicit backup monitoring.
@@ -61,4 +69,3 @@ Still to implement before deployment:
 - If the app cannot read cases, verify `config.js`, authentication state, user `active`/`role`, and collection rules.
 - If a time is rejected, check both browser conflict messaging and the PocketBase hook response.
 - Always reproduce database issues against a temporary data directory first.
-

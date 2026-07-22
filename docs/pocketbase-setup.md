@@ -37,6 +37,8 @@ Migration อยู่ที่ `pocketbase/pb_migrations/1784737200_initial_or_
 
 Hook `pocketbase/pb_hooks/schedule_conflicts.pb.js` ตรวจ date, OR, start และ duration อีกครั้งที่ server เพื่อปฏิเสธเคสซ้อน แม้ client-side validation จะถูกข้าม
 
+Hook `pocketbase/pb_hooks/registration.pb.js` เปิดเฉพาะ `POST /api/or-planner/register` สำหรับสมัครบัญชีผู้ชม โดยรับชื่อ อีเมล และรหัสผ่าน แล้วบังคับ `role = viewer`, `active = true`, `verified = false` ที่ server ส่วน generic create API ของ `users` ยังล็อกไว้สำหรับ superuser เท่านั้น
+
 ## Environment variables for setup
 
 | Variable | Required | Description |

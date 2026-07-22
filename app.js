@@ -449,7 +449,7 @@
         updateSyncLabel();
         if (!quiet) openAuthModal();
       } else {
-        setSyncState("error", "เชื่อมต่อข้อมูลไม่สำเร็จ");
+        setSyncState("error", "ยังไม่ได้เข้าสู่ระบบ");
         if (!quiet) showToast(error.message, "error");
       }
     } finally {

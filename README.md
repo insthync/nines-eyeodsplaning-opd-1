@@ -81,6 +81,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start-pocketbase.p
 
 PocketBase superuser ใช้เฉพาะ setup, dashboard และงานดูแลระบบ เพราะ superuser จะข้าม API rules ทั้งหมด
 
+ผู้ใช้ใหม่สามารถเลือก **ลงทะเบียนผู้ชม** จากหน้าต่างเข้าสู่ระบบ หรือเปิด `/register.html` โดยตรง ระบบจะบังคับให้บัญชีที่สมัครเองทุกบัญชีเป็น `viewer` ที่อ่านข้อมูลได้อย่างเดียว การเปลี่ยนเป็น `editor` หรือ `admin` ต้องทำโดย superuser ผ่าน PocketBase dashboard หรือสคริปต์ setup เท่านั้น
+
 หากต้องการเพิ่มหรือเปลี่ยนบัญชีเจ้าหน้าที่ ให้รัน `setup-pocketbase.ps1` อีกครั้งโดยเปลี่ยน `PB_STAFF_*` สคริปต์จะ upsert บัญชีตามอีเมล
 
 ## Scripts
@@ -123,7 +125,9 @@ index.html                                      UI และ dialog
 styles.css                                     responsive/print styles
 app.js                                         calendar, auth, roles และ CRUD
 config.js                                      PocketBase URL และ write roles
+register.html / register.css / register.js     หน้าลงทะเบียนบัญชีผู้ชม
 pocketbase/pb_migrations/...initial_schema.js  collections และ API rules
+pocketbase/pb_hooks/registration.pb.js         บังคับบัญชีสมัครเองเป็น viewer
 pocketbase/pb_hooks/schedule_conflicts.pb.js   server-side overlap validation
 docs/pocketbase-setup.md                       คู่มือ schema/security เพิ่มเติม
 ```

@@ -43,6 +43,8 @@ Core palette lives in `styles.css`: navy text, teal actions, pale aqua canvas, w
 - `editor`: create, update, and delete cases.
 - `admin`: currently the same case permissions as editor; reserved for future management functions.
 - Unauthenticated users must not be able to change data.
+- Registration is a dedicated, mobile-friendly page reached from the login dialog. It explains the viewer limitation and shows an explicit completion state.
+- Every self-registered account is a `viewer`; role changes are never offered on the public registration page.
 
 The UI must reflect permissions, but PocketBase API rules remain authoritative.
 
@@ -58,4 +60,3 @@ The UI must reflect permissions, but PocketBase API rules remain authoritative.
 ## Design-change rule
 
 Before materially changing navigation, terminology, fields, colors, or scheduling behavior, update this document and explain the tradeoff in `docs/HANDOFF.md`.
-

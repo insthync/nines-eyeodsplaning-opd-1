@@ -39,11 +39,20 @@ The normal configuration uses PocketBase. To intentionally use local-only storag
 
 PocketBase superusers are only for setup, the PocketBase dashboard, and system administration. They must not be used by the web UI.
 
+## Registration flow
+
+1. `register.html` collects display name, email, password, and password confirmation.
+2. `register.js` posts those fields to `POST /api/or-planner/register`.
+3. `registration.pb.js` ignores client-controlled privilege fields and explicitly saves `role = viewer`, `active = true`, and `verified = false`.
+4. The generic public create endpoint for `users` remains locked; the custom endpoint returns only a sanitized account summary and no auth token.
+5. A PocketBase superuser can later promote the account through the dashboard or setup script.
+
 ## Authorization
 
 | Resource/action | Rule |
 | --- | --- |
 | `users` login | `active = true` |
+| Self-register a `users` record | Custom route forces active `viewer`; generic create remains superuser-only |
 | Read own `users` record | Authenticated record ID matches and active |
 | Read `surgery_cases` | Active authenticated user |
 | Create/update/delete `surgery_cases` | Active editor or admin |
@@ -77,4 +86,3 @@ The migration is the source of truth for these rules. Frontend `writeRoles` must
 ## Current configuration caveat
 
 At the 2026-07-22 handoff, `config.js` has `requireAuth: false`, while PocketBase collection rules require authentication for all case reads and writes. Confirm the intended unauthenticated experience before release. The earlier role-based UI verification used `requireAuth: true`. Do not silently change this setting; resolve and retest it deliberately.
-
