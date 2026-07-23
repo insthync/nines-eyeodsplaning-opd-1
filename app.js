@@ -565,18 +565,27 @@
         START_TIMES.length - slotIndex,
       );
       const card = createElement("button", `case-card ${item.status}`);
+      const hnLabel = item.hn && !/^HN(?:\b|[-\s:])/i.test(item.hn)
+        ? `HN ${item.hn}`
+        : item.hn;
+      const patientSummary = hnLabel
+        ? `${item.patient_name} · ${hnLabel}`
+        : item.patient_name;
+      const anesthesiaLabel = ANESTHESIA_LABELS[item.anesthesia] || item.anesthesia;
       card.type = "button";
       card.style.gridColumn = item.operating_room === "OR 2" ? "3" : "2";
       card.style.gridRow = `${slotIndex + 2} / span ${visibleSlots}`;
       card.setAttribute(
         "aria-label",
-        `${item.patient_name} ${item.procedure} ${item.operating_room} เวลา ${item.start_time} น.`,
+        `${patientSummary} แพทย์ ${item.doctor} ${item.procedure} ${anesthesiaLabel} ${item.operating_room} เวลา ${item.start_time} น.`,
       );
-      card.title = `${item.patient_name}\n${item.procedure}\n${item.doctor}`;
+      card.title = `${patientSummary}\nแพทย์: ${item.doctor}\n${item.procedure}\nระงับความรู้สึก: ${anesthesiaLabel}`;
       card.append(
         createElement("span", "case-time", `${item.start_time} · ${item.duration} นาที`),
-        createElement("strong", "case-patient", item.patient_name),
+        createElement("strong", "case-patient", patientSummary),
+        createElement("span", "case-doctor", `แพทย์: ${item.doctor}`),
         createElement("span", "case-procedure", item.procedure),
+        createElement("span", "case-anesthesia", `ระงับความรู้สึก: ${anesthesiaLabel}`),
       );
       card.addEventListener("click", () => editCase(item.id));
       grid.append(card);

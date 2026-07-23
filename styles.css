@@ -558,9 +558,19 @@ h1 {
   font-weight: 700;
 }
 
-.case-procedure {
+.case-doctor,
+.case-procedure,
+.case-anesthesia {
   color: var(--muted);
   font-size: 0.68rem;
+}
+
+.case-doctor {
+  font-weight: 600;
+}
+
+.case-anesthesia {
+  font-size: 0.66rem;
 }
 
 .daily-empty {
