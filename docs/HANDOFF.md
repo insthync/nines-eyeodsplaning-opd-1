@@ -1,6 +1,6 @@
 # Current handoff
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 
 ## Repository state
 
@@ -20,6 +20,7 @@ Last updated: 2026-07-23
 - Dedicated Thai registration page linked from login; self-registration is forced to `viewer` by a PocketBase custom route.
 - `viewer`, `editor`, and `admin` users.
 - PocketBase migration for `users` and `surgery_cases` rules/schema.
+- Public appointment reads for guests, viewers, editors, and admins; writes remain limited to active editors/admins.
 - Server hook rejecting overlapping room schedules.
 - Windows PowerShell and Linux/macOS Bash download/setup/start scripts.
 - Same-origin frontend/API serving suitable for a small VPS.
@@ -31,7 +32,7 @@ Last updated: 2026-07-23
 - PowerShell parsing and script behavior.
 - Bash syntax, LF line endings, and a full Linux-container setup/start flow.
 - Migration and setup idempotency with temporary data.
-- API behavior: editor/admin write, viewer read-only, conflict rejection.
+- Public-read migration on a clean temporary PocketBase database: guest, viewer, editor, and admin list/detail reads; guest/viewer writes rejected; editor/admin create, update, and delete allowed.
 - Registration API behavior: privilege fields cannot override `viewer`; generic public `users` creation remains locked.
 - Registration page submit/success flow at desktop and 390 px mobile width, with no browser console errors or horizontal overflow.
 - Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
@@ -40,17 +41,17 @@ Last updated: 2026-07-23
 
 ## Open decisions and risks
 
-1. `config.js` currently sets `requireAuth: false`, but PocketBase rules require authentication for reads and writes. Decide the desired logged-out experience, likely restore `true`, then rerun browser tests.
-2. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
-3. No automated test suite or CI workflow exists.
-4. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
-5. Hosting was discussed but not provisioned. Hetzner CX23 was recommended; pricing and region must be rechecked before purchase.
-6. Formal privacy/security/compliance review is required before storing real patient data.
+1. Public API reads expose all `surgery_cases` fields, including patient name, HN, procedure, doctor, and schedule data. Formal organizational privacy/security/compliance approval is required before storing real patient data; otherwise introduce a redacted public data model.
+2. Signed-out browser verification for the new public-read contract is still pending on a browser that can reach the local test server; the current in-app browser blocked localhost navigation by policy.
+3. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
+4. No automated test suite or CI workflow exists.
+5. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
+6. Hosting was discussed but not provisioned. Hetzner CX23 was recommended; pricing and region must be rechecked before purchase.
 7. The original reference site should be treated as visual/workflow inspiration, not copied assets.
 
 ## Suggested next work
 
-1. Resolve `requireAuth` and retest logged-out, viewer, editor, and admin flows.
+1. Obtain an explicit privacy/security decision on publishing patient-identifying appointment fields, or implement a redacted public representation.
 2. Review and commit the current working tree, then push it so another device can recover it.
 3. Add automated tests for overlap logic, role handling, and PocketBase API rules.
 4. Add a production deployment package for the selected host.

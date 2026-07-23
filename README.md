@@ -75,6 +75,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start-pocketbase.p
 
 | Role | อ่านตาราง | เพิ่ม/แก้ไข/ลบ |
 | --- | --- | --- |
+| Guest (ไม่ login) | Yes | No |
 | `viewer` | Yes | No |
 | `editor` | Yes | Yes |
 | `admin` | Yes | Yes |
@@ -114,7 +115,7 @@ Frontend เป็น static HTML/CSS/JavaScript แต่ข้อมูลต�
 
 ## ข้อควรระวังเรื่องข้อมูลผู้ป่วย
 
-ชื่อผู้ป่วย, HN และรายละเอียดหัตถการเป็นข้อมูลละเอียดอ่อน อย่าเปิด collection rules เป็น public ควรใช้ HTTPS, บัญชีรายบุคคล, backup ที่เข้ารหัส, least privilege และข้อกำหนดด้านข้อมูลสุขภาพขององค์กรก่อนนำขึ้นระบบจริง
+ชื่อผู้ป่วย, HN และรายละเอียดหัตถการเป็นข้อมูลละเอียดอ่อน ปัจจุบัน collection rules เปิดให้อ่านแบบ public ตามข้อกำหนดของระบบ จึงต้องถือว่าทุกคนที่เข้าถึง PocketBase สามารถดึงข้อมูลทุก field ได้ ควรได้รับการอนุมัติด้าน privacy/security อย่างชัดเจนก่อนใช้ข้อมูลผู้ป่วยจริง หรือแยกข้อมูล public ที่ปกปิดตัวตน พร้อมใช้ HTTPS, backup ที่เข้ารหัส และข้อกำหนดด้านข้อมูลสุขภาพขององค์กร
 
 ห้าม commit `pocketbase/pb_data` เข้า Git โฟลเดอร์ดังกล่าวถูกเพิ่มไว้ใน `.gitignore` แล้ว
 

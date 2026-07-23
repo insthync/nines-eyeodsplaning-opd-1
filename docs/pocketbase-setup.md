@@ -16,7 +16,7 @@ Auth collection `users` มี fields เพิ่มเติม:
 | `role` | Select | `viewer`, `editor`, `admin` |
 | `active` | Bool | ต้องเป็น `true` จึง login ได้ |
 
-API rules ของ `surgery_cases` กำหนดให้ผู้ใช้ต้อง login และ `active = true` ทุก action ส่วน Create, Update และ Delete ต้องมี role `editor` หรือ `admin`
+API rules ของ `surgery_cases` เปิด List และ View เป็น public เพื่อให้ guest และผู้ใช้ทุก role อ่านตารางได้โดยไม่ต้อง login ส่วน Create, Update และ Delete ต้อง login ด้วยบัญชีที่ `active = true` และมี role `editor` หรือ `admin`
 
 ## Case schema
 
@@ -33,7 +33,7 @@ API rules ของ `surgery_cases` กำหนดให้ผู้ใช้�
 | `anesthesia` | Select | Yes | `general`, `local`, `regional` |
 | `status` | Select | Yes | `confirmed`, `waitlist`, `coordination` |
 
-Migration อยู่ที่ `pocketbase/pb_migrations/1784737200_initial_or_planner_schema.js` และจะถูกรันโดย setup/start script
+Migration เริ่มต้นอยู่ที่ `pocketbase/pb_migrations/1784737200_initial_or_planner_schema.js` และ migration `1784836072_public_surgery_case_reads.js` เปิดสิทธิ์อ่านแบบ public โดย setup/start script จะรัน migration ที่ยังไม่ถูกใช้
 
 Hook `pocketbase/pb_hooks/schedule_conflicts.pb.js` ตรวจ date, OR, start และ duration อีกครั้งที่ server เพื่อปฏิเสธเคสซ้อน แม้ client-side validation จะถูกข้าม
 

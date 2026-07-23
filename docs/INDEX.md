@@ -37,6 +37,6 @@ skills/                      Portable project continuation skill
 - Frontend and PocketBase default to the same origin.
 - `users` roles are `viewer`, `editor`, and `admin`.
 - Public self-registration always creates an active, unverified `viewer` through a narrow custom route.
-- `surgery_cases` is private to active authenticated users; writes require editor or admin.
+- `surgery_cases` is publicly readable, including patient and schedule fields; writes require an active editor or admin.
 - The frontend auth token is stored in `sessionStorage`, not persistent local storage.
 - `pb_data` is local/production state and is intentionally ignored by Git.

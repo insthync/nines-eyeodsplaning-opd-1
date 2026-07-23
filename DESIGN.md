@@ -8,7 +8,7 @@ The design should feel calm, clinical, legible, and operational rather than deco
 
 ## Primary workflows
 
-1. Sign in with a staff account.
+1. Open the board as a guest or sign in with a staff account.
 2. Review the selected day's OR 1 and OR 2 timetable.
 3. Select an empty time slot or `#add-case-button` to add a case.
 4. Open an existing case to view or edit it according to role.
@@ -39,10 +39,11 @@ Core palette lives in `styles.css`: navy text, teal actions, pale aqua canvas, w
 
 ## Permission behavior
 
+- `guest` (not signed in): read schedule and case details; no create/update/delete controls.
 - `viewer`: read schedule and case details; no create/update/delete controls.
 - `editor`: create, update, and delete cases.
 - `admin`: currently the same case permissions as editor; reserved for future management functions.
-- Unauthenticated users must not be able to change data.
+- Unauthenticated users can read all appointment fields but must not be able to change data.
 - When signed out, `#add-case-button` becomes the login entry point: it stays enabled, uses a login icon and label, and opens the login dialog instead of the case form.
 - The account-status chip is hidden while signed out. Once signed in, it shows the current account and remains the entry point for switching accounts or logging out.
 - Registration is a dedicated, mobile-friendly page reached from the login dialog. It explains the viewer limitation and shows an explicit completion state.

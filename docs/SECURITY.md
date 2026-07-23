@@ -4,6 +4,7 @@ This application can contain patient name, HN, procedure, doctor, and appointmen
 
 ## Required boundaries
 
+- The `surgery_cases` list/view API is intentionally public. Anyone who can reach PocketBase can retrieve every exposed case field, including patient name, HN, procedure, doctor, and schedule data.
 - Never place superuser credentials in `config.js`, browser code, Git, screenshots, logs, or chat transcripts.
 - Use one named `users` account per person. Disable access with `active = false` rather than sharing accounts.
 - Use `viewer` unless a user needs scheduling permissions.
@@ -36,5 +37,7 @@ The registration form includes a honeypot and the route has a small request-body
 - Never use production patient data for development or automated tests.
 
 ## Before production
+
+Public read access means browser UI choices cannot conceal these records from an API caller. Before storing real patient data, the organization must explicitly approve public disclosure of every case field or redesign the public view around a separate redacted collection/endpoint.
 
 The organization operating the service must review applicable health-data, privacy, consent, residency, breach-notification, and retention requirements. Repository documentation is technical guidance, not legal or compliance approval.

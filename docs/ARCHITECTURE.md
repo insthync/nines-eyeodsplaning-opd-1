@@ -5,7 +5,7 @@
 ```text
 Browser
   ├─ index.html + styles.css + config.js + app.js
-  └─ REST requests with user auth token
+  └─ Public read requests; write requests include a user auth token
                 │
                 ▼
 PocketBase 0.39.8
@@ -54,7 +54,7 @@ PocketBase superusers are only for setup, the PocketBase dashboard, and system a
 | `users` login | `active = true` |
 | Self-register a `users` record | Custom route forces active `viewer`; generic create remains superuser-only |
 | Read own `users` record | Authenticated record ID matches and active |
-| Read `surgery_cases` | Active authenticated user |
+| Read `surgery_cases` | Public, including unauthenticated guests |
 | Create/update/delete `surgery_cases` | Active editor or admin |
 
 The migration is the source of truth for these rules. Frontend `writeRoles` must remain consistent with it.
@@ -83,6 +83,6 @@ The migration is the source of truth for these rules. Frontend `writeRoles` must
 - Test migrations against a new temporary data directory or an isolated copy before production.
 - Do not manually edit production collections without recording an equivalent migration.
 
-## Current configuration caveat
+## Public-read configuration
 
-At the 2026-07-22 handoff, `config.js` has `requireAuth: false`, while PocketBase collection rules require authentication for all case reads and writes. Confirm the intended unauthenticated experience before release. The earlier role-based UI verification used `requireAuth: true`. Do not silently change this setting; resolve and retest it deliberately.
+`config.js` and the frontend default both set `requireAuth: false`. PocketBase list/view rules intentionally allow public reads, so guests can load the schedule and open case details without signing in. The browser still requires login before offering create or edit actions, and PocketBase write rules remain the authoritative boundary.

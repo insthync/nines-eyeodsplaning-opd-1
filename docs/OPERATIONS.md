@@ -17,6 +17,8 @@ Missing passwords are prompted securely. Windows uses the corresponding `.ps1` s
 
 Local URLs are `http://127.0.0.1:8090/` for the app and `http://127.0.0.1:8090/_/` for the PocketBase dashboard.
 
+The appointment board and case-detail API are readable without login. Login is required only for users who need to add, edit, or delete appointments.
+
 ## Add or update a staff account
 
 Run the setup script again with the target email. A new email creates an account; an existing email updates the account, password, name, role, and active state.
@@ -66,6 +68,6 @@ Still to implement before deployment:
 
 - If migrations fail, stop and inspect the full output; do not bypass them.
 - If setup says the bootstrap port is occupied, choose another `--bootstrap-http` address.
-- If the app cannot read cases, verify `config.js`, authentication state, user `active`/`role`, and collection rules.
+- If the app cannot read cases, verify `config.js`, network access, and that the `surgery_cases` list/view rules are public after migrations run. Authentication and roles should not affect reads.
 - If a time is rejected, check both browser conflict messaging and the PocketBase hook response.
 - Always reproduce database issues against a temporary data directory first.

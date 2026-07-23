@@ -5,7 +5,7 @@
     pocketBaseUrl: window.location.origin,
     collection: "surgery_cases",
     authCollection: "users",
-    requireAuth: true,
+    requireAuth: false,
     writeRoles: ["admin", "editor"],
     refreshIntervalMs: 30000,
   };
