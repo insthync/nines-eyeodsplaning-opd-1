@@ -34,6 +34,7 @@
 
   const elements = {
     addButton: document.querySelector("#add-case-button"),
+    addButtonIcon: document.querySelector("#add-case-button path"),
     printButton: document.querySelector("#print-button"),
     syncStatus: document.querySelector("#sync-status"),
     syncStatusLabel: document.querySelector("#sync-status-label"),
@@ -393,6 +394,9 @@
   }
 
   function setSyncState(type, label) {
+    if (store.kind === "pocketbase") {
+      elements.syncStatus.hidden = !store.isAuthenticated;
+    }
     elements.syncStatus.classList.toggle("loading", type === "loading");
     elements.syncStatus.classList.toggle("error", type === "error");
     elements.syncStatusLabel.textContent = label;
@@ -400,6 +404,7 @@
 
   function updateSyncLabel() {
     if (store.kind === "local") {
+      elements.syncStatus.hidden = false;
       elements.syncStatus.disabled = true;
       setSyncState("ready", "บันทึกในเครื่องนี้");
       return;
@@ -426,12 +431,21 @@
 
   function updatePermissionState() {
     const allowed = canChangeData();
-    elements.addButton.disabled = !allowed;
-    elements.addButton.title = allowed
-      ? "เพิ่มเคสผ่าตัด"
-      : store.isAuthenticated
-        ? "บัญชีนี้ดูข้อมูลได้อย่างเดียว"
-        : "เข้าสู่ระบบเพื่อเพิ่มเคส";
+    const needsLogin = store.kind === "pocketbase" && !store.isAuthenticated;
+    const label = needsLogin
+      ? "เข้าสู่ระบบ"
+      : allowed
+        ? "เพิ่มเคสผ่าตัด"
+        : "บัญชีนี้ดูข้อมูลได้อย่างเดียว";
+    elements.addButton.disabled = !needsLogin && !allowed;
+    elements.addButton.title = label;
+    elements.addButton.setAttribute("aria-label", label);
+    elements.addButtonIcon.setAttribute(
+      "d",
+      needsLogin
+        ? "M10 17l5-5-5-5M15 12H3M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"
+        : "M12 5v14M5 12h14",
+    );
   }
 
   async function loadCases({ quiet = false } = {}) {
@@ -713,7 +727,7 @@
   }
 
   function openCaseModal(prefill = {}) {
-    if (store.kind === "pocketbase" && config.requireAuth && !store.isAuthenticated) {
+    if (store.kind === "pocketbase" && !store.isAuthenticated) {
       openAuthModal();
       showToast("เข้าสู่ระบบก่อนเพิ่มหรือแก้ไขเคส", "error");
       return;
@@ -980,7 +994,13 @@
   }
 
   function bindEvents() {
-    elements.addButton.addEventListener("click", () => openCaseModal());
+    elements.addButton.addEventListener("click", () => {
+      if (store.kind === "pocketbase" && !store.isAuthenticated) {
+        openAuthModal();
+        return;
+      }
+      openCaseModal();
+    });
     elements.printButton.addEventListener("click", () => window.print());
     elements.syncStatus.addEventListener("click", openAuthModal);
     elements.viewTabs.forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));

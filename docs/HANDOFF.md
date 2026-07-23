@@ -1,6 +1,6 @@
 # Current handoff
 
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Repository state
 
@@ -15,6 +15,7 @@ Last updated: 2026-07-22
 - Daily, monthly, dashboard, and print views.
 - Add/edit/delete case forms and client-side overlap checks.
 - PocketBase REST adapter with session login and role-aware UI.
+- Signed-out header uses `#add-case-button` as the login entry point; the separate account-status chip appears only after login.
 - Dedicated Thai registration page linked from login; self-registration is forced to `viewer` by a PocketBase custom route.
 - `viewer`, `editor`, and `admin` users.
 - PocketBase migration for `users` and `surgery_cases` rules/schema.
@@ -33,6 +34,7 @@ Last updated: 2026-07-22
 - Registration API behavior: privilege fields cannot override `viewer`; generic public `users` creation remains locked.
 - Registration page submit/success flow at desktop and 390 px mobile width, with no browser console errors or horizontal overflow.
 - Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
+- Signed-out add/login control and signed-in add/account transition at desktop and 390 px widths, with no browser console errors or horizontal overflow.
 - `git diff --check`.
 
 ## Open decisions and risks

@@ -43,6 +43,8 @@ Core palette lives in `styles.css`: navy text, teal actions, pale aqua canvas, w
 - `editor`: create, update, and delete cases.
 - `admin`: currently the same case permissions as editor; reserved for future management functions.
 - Unauthenticated users must not be able to change data.
+- When signed out, `#add-case-button` becomes the login entry point: it stays enabled, uses a login icon and label, and opens the login dialog instead of the case form.
+- The account-status chip is hidden while signed out. Once signed in, it shows the current account and remains the entry point for switching accounts or logging out.
 - Registration is a dedicated, mobile-friendly page reached from the login dialog. It explains the viewer limitation and shows an explicit completion state.
 - Every self-registered account is a `viewer`; role changes are never offered on the public registration page.
 
