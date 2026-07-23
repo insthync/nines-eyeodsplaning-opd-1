@@ -406,7 +406,7 @@ h1 {
   position: relative;
   display: grid;
   grid-template-columns: 78px minmax(310px, 1fr) minmax(310px, 1fr);
-  grid-template-rows: 50px repeat(24, var(--slot-height));
+  grid-template-rows: 50px repeat(var(--slot-count, 26), var(--slot-height));
   min-width: 700px;
 }
 
@@ -437,7 +437,16 @@ h1 {
   border-right: 0;
 }
 
+.time-header {
+  left: 0;
+  z-index: 10;
+  box-shadow: 3px 0 8px rgba(31, 64, 73, 0.08);
+}
+
 .time-cell {
+  position: sticky;
+  left: 0;
+  z-index: 7;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
@@ -447,6 +456,7 @@ h1 {
   font-family: "DM Sans", sans-serif;
   font-size: 0.72rem;
   font-variant-numeric: tabular-nums;
+  box-shadow: 3px 0 8px rgba(31, 64, 73, 0.06);
 }
 
 .time-cell.full-hour {
@@ -1484,11 +1494,15 @@ body.modal-open {
 
   .schedule-grid {
     grid-template-columns: 62px 1fr 1fr;
-    grid-template-rows: 34px repeat(24, 28px);
+    grid-template-rows: 34px repeat(var(--slot-count, 26), 28px);
     min-width: 0;
   }
 
-  .grid-header { position: static; }
+  .grid-header,
+  .time-cell {
+    position: static;
+    box-shadow: none;
+  }
 
   .case-card {
     margin: 1px 3px;

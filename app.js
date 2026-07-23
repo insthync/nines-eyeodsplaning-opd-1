@@ -13,7 +13,7 @@
   const config = { ...DEFAULT_CONFIG, ...(window.APP_CONFIG || {}) };
   const LOCAL_STORAGE_KEY = "or-planning-board-cases-v1";
   const START_HOUR = 8;
-  const END_HOUR = 20;
+  const END_HOUR = 21;
   const SLOT_MINUTES = 30;
   const START_TIMES = Array.from(
     { length: ((END_HOUR - START_HOUR) * 60) / SLOT_MINUTES },
@@ -516,9 +516,14 @@
   function renderDailyView() {
     const grid = elements.calendarGrid;
     grid.replaceChildren();
+    grid.style.setProperty("--slot-count", String(START_TIMES.length));
 
     ["เวลา", "OR 1", "OR 2"].forEach((label, columnIndex) => {
-      const header = createElement("div", "grid-header", label);
+      const header = createElement(
+        "div",
+        `grid-header${columnIndex === 0 ? " time-header" : ""}`,
+        label,
+      );
       header.style.gridColumn = String(columnIndex + 1);
       header.style.gridRow = "1";
       grid.append(header);

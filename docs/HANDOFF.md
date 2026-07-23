@@ -13,6 +13,7 @@ Last updated: 2026-07-23
 
 - Thai responsive OR planning board inspired by the original Canva site.
 - Daily, monthly, dashboard, and print views.
+- Daily timetable covers 08:00–21:00 with selectable start times through 20:30; its time column stays fixed during horizontal scrolling.
 - Add/edit/delete case forms and client-side overlap checks.
 - PocketBase REST adapter with session login and role-aware UI.
 - Signed-out header uses `#add-case-button` as the login entry point; the separate account-status chip appears only after login.
