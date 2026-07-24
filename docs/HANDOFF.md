@@ -13,7 +13,7 @@ Last updated: 2026-07-24
 
 - Thai responsive OR planning board inspired by the original Canva site.
 - Daily, monthly, dashboard, and print views.
-- Daily timetable covers 08:00–21:00 with selectable start times through 20:30; its time column stays fixed during horizontal scrolling.
+- Daily timetable covers 08:00–21:00 with selectable start times through 20:30; 30-minute rows fit complete case-card details, and the time column stays fixed during horizontal scrolling.
 - Daily case cards show time/duration, patient name with optional HN, doctor, procedure, and anesthesia.
 - Add/edit/delete case forms and client-side overlap checks.
 - PocketBase REST adapter with session login and role-aware UI.
@@ -39,6 +39,7 @@ Last updated: 2026-07-24
 - Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
 - Signed-out add/login control and signed-in add/account transition at desktop and 390 px widths, with no browser console errors or horizontal overflow.
 - Case-card details at 1440 px and 390 px: 60- and 120-minute cards show time/duration, patient with HN, doctor, procedure, and anesthesia without content overflow or browser console errors.
+- Enlarged 30-minute rows at 800 px and 390 px: complete five-line cards fit without content overflow; longer cases remain proportional, schedule scrolling stays internal, and no browser console errors occur.
 - `git diff --check`.
 
 ## Open decisions and risks

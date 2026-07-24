@@ -17,7 +17,7 @@ The design should feel calm, clinical, legible, and operational rather than deco
 
 ## Views
 
-- **Daily:** 08:00–21:00 in 30-minute slots, allowing start times through 20:30, with OR 1 and OR 2 columns. Cases occupy visual blocks based on duration. Each case card shows time/duration, patient name with optional HN, doctor, procedure, and anesthesia in that order. During horizontal scrolling, the time column stays fixed while the two operating-room columns move.
+- **Daily:** 08:00–21:00 in 30-minute slots, allowing start times through 20:30, with OR 1 and OR 2 columns. Each 30-minute row is tall enough to show a complete five-line case card; longer cases continue to span rows in proportion to duration. Each case card shows time/duration, patient name with optional HN, doctor, procedure, and anesthesia in that order. During horizontal scrolling, the time column stays fixed while the two operating-room columns move.
 - **Monthly:** Calendar-level case counts and capacity signals for the selected month.
 - **Dashboard:** Monthly totals, status mix, busiest days, and room utilization.
 
