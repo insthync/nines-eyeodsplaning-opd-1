@@ -1,6 +1,6 @@
 # Current handoff
 
-Last updated: 2026-07-24
+Last updated: 2026-07-26
 
 ## Repository state
 
@@ -13,6 +13,7 @@ Last updated: 2026-07-24
 
 - Thai responsive OR planning board inspired by the original Canva site.
 - Daily, monthly, dashboard, and print views.
+- Monthly date cells show only the case count; patient and time previews are intentionally omitted to keep calendar rows uniform.
 - Daily timetable covers 08:00–21:00 with selectable start times through 20:30; 30-minute rows fit complete case-card details, and the time column stays fixed during horizontal scrolling.
 - Daily case cards show time/duration, patient name with optional HN, doctor, procedure, and anesthesia.
 - Add/edit/delete case forms and client-side overlap checks.
@@ -40,17 +41,17 @@ Last updated: 2026-07-24
 - Signed-out add/login control and signed-in add/account transition at desktop and 390 px widths, with no browser console errors or horizontal overflow.
 - Case-card details at 1440 px and 390 px: 60- and 120-minute cards show time/duration, patient with HN, doctor, procedure, and anesthesia without content overflow or browser console errors.
 - Enlarged 30-minute rows at 800 px and 390 px: complete five-line cards fit without content overflow; longer cases remain proportional, schedule scrolling stays internal, and no browser console errors occur.
+- Monthly case-count-only cells with synthetic temporary data at 1265 px and 375 px: populated dates showed the correct counts, every calendar row had one consistent height, no patient/time preview elements were rendered, and there was no horizontal overflow or browser console error.
 - `git diff --check`.
 
 ## Open decisions and risks
 
 1. Public API reads expose all `surgery_cases` fields, including patient name, HN, procedure, doctor, and schedule data. Formal organizational privacy/security/compliance approval is required before storing real patient data; otherwise introduce a redacted public data model.
-2. Signed-out browser verification for the new public-read contract is still pending on a browser that can reach the local test server; the current in-app browser blocked localhost navigation by policy.
-3. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
-4. No automated test suite or CI workflow exists.
-5. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
-6. Hosting was discussed but not provisioned. Hetzner CX23 was recommended; pricing and region must be rechecked before purchase.
-7. The original reference site should be treated as visual/workflow inspiration, not copied assets.
+2. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
+3. No automated test suite or CI workflow exists.
+4. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
+5. Hosting was discussed but not provisioned. Hetzner CX23 was recommended; pricing and region must be rechecked before purchase.
+6. The original reference site should be treated as visual/workflow inspiration, not copied assets.
 
 ## Suggested next work
 

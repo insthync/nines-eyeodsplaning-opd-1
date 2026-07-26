@@ -681,45 +681,6 @@ h1 {
   font-weight: 600;
 }
 
-.month-cases {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 8px;
-}
-
-.month-case {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  min-width: 0;
-  color: var(--muted);
-  font-size: 0.65rem;
-}
-
-.month-case i {
-  width: 7px;
-  height: 7px;
-  flex: 0 0 auto;
-  border-radius: 2px;
-}
-
-.month-case i.confirmed { background: var(--confirmed); }
-.month-case i.waitlist { background: var(--waitlist); }
-.month-case i.coordination { background: var(--coordination); }
-
-.month-case span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.more-cases {
-  color: var(--teal);
-  font-size: 0.64rem;
-  font-weight: 700;
-}
-
 .dashboard-panel {
   padding-bottom: 28px;
   background: #fafcfc;
@@ -1381,19 +1342,6 @@ body.modal-open {
   .day-case-count {
     top: 9px;
     right: 6px;
-  }
-
-  .month-case { display: none; }
-
-  .month-cases {
-    flex-direction: row;
-    gap: 3px;
-    margin-top: 8px;
-  }
-
-  .month-cases::before {
-    color: var(--muted);
-    font-size: 0.62rem;
   }
 
   .metric-grid,

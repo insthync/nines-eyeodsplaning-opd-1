@@ -634,19 +634,6 @@
 
       if (dayCases.length > 0) {
         dayButton.append(createElement("span", "day-case-count", `${dayCases.length} เคส`));
-        const preview = createElement("span", "month-cases");
-        dayCases.slice(0, 2).forEach((item) => {
-          const row = createElement("span", "month-case");
-          row.append(
-            createElement("i", item.status),
-            createElement("span", "", `${item.start_time} ${item.patient_name}`),
-          );
-          preview.append(row);
-        });
-        if (dayCases.length > 2) {
-          preview.append(createElement("span", "more-cases", `+${dayCases.length - 2} เคส`));
-        }
-        dayButton.append(preview);
       }
 
       dayButton.addEventListener("click", () => {
