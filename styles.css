@@ -541,7 +541,7 @@ h1 {
 .case-card > * {
   max-width: 100%;
   color: var(--ink);
-  white-space: nowrap;
+  white-space: normal;
   overflow-wrap: break-word;
   word-break: break-word;
 }
