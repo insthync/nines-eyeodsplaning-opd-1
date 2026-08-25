@@ -275,6 +275,18 @@
                 <option value="coordination">รอประสานงาน</option>
               </select>
             </label>
+            <label class="field">
+              <span>Implant</span>
+              <input id="implant" name="implant" type="text" placeholder="กรอก Implant" autocomplete="off" required />
+            </label>
+            <label class="field">
+              <span>สถานะ Confirm</span>
+              <select id="status-confirm" name="status_confirm" required>
+                <option value="confirmed">✅ Confirm</option>
+                <option value="no-answer">📞 ไม่รับสาย</option>
+                <option value="cancelled">❌ ยกเลิก</option>
+              </select>
+            </label>
           </div>
 
           <p id="form-error" class="form-error" role="alert" hidden></p>

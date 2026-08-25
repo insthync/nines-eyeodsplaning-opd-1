@@ -76,6 +76,8 @@
     procedure: document.querySelector("#procedure"),
     anesthesia: document.querySelector("#anesthesia"),
     status: document.querySelector("#status"),
+    implant: document.querySelector("#implant"),
+    status_confirm: document.querySelector("#status-confirm"),
     deleteModal: document.querySelector("#delete-modal"),
     keepCaseButton: document.querySelector("#keep-case-button"),
     confirmDeleteButton: document.querySelector("#confirm-delete-button"),
@@ -370,6 +372,8 @@
       procedure: String(record.procedure || ""),
       anesthesia: String(record.anesthesia || "general"),
       status: STATUS_META[record.status] ? record.status : "coordination",
+      implant: String(record.implant || ""),
+      status_confirm: String(record.statusConfirm || "confirmed"),
       created: record.created || "",
       updated: record.updated || "",
     };
@@ -586,6 +590,7 @@
         createElement("span", "case-doctor", `แพทย์: ${item.doctor}`),
         createElement("span", "case-procedure", item.procedure),
         createElement("span", "case-anesthesia", `ระงับความรู้สึก: ${anesthesiaLabel}`),
+        createElement("span", "case-implant", `Implant: ${implantLabel}`),
       );
       card.addEventListener("click", () => editCase(item.id));
       grid.append(card);
@@ -749,6 +754,8 @@
     elements.duration.value = "60";
     elements.anesthesia.value = "general";
     elements.status.value = "confirmed";
+    elements.implant.value = "",
+    elements.statusConfirm = "confirmed",
     clearFormError();
     showModal(elements.caseModal);
     window.setTimeout(() => elements.patientName.focus(), 20);
@@ -777,6 +784,8 @@
     elements.procedure.value = item.procedure;
     elements.anesthesia.value = item.anesthesia;
     elements.status.value = item.status;
+    elements.implant.value = item.implant,
+    elements.statusConfirm = item.statusConfirm,
     clearFormError();
     showModal(elements.caseModal);
     window.setTimeout(() => elements.patientName.focus(), 20);
@@ -802,6 +811,8 @@
       procedure: elements.procedure.value.trim(),
       anesthesia: elements.anesthesia.value,
       status: elements.status.value,
+      implant: elements.implant.value,
+      status_confirm: elements.statusConfirm.value,
     };
   }
 
