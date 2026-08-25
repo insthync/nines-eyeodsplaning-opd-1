@@ -560,7 +560,8 @@ h1 {
 
 .case-doctor,
 .case-procedure,
-.case-anesthesia {
+.case-anesthesia,
+.cast-implant {
   color: var(--muted);
   font-size: 0.68rem;
 }

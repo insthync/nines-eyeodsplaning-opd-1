@@ -576,6 +576,7 @@
         ? `${item.patient_name} · ${hnLabel}`
         : item.patient_name;
       const anesthesiaLabel = ANESTHESIA_LABELS[item.anesthesia] || item.anesthesia;
+      const implantLabel = item.implant ? item.implant : "-";
       card.type = "button";
       card.style.gridColumn = item.operating_room === "OR 2" ? "3" : "2";
       card.style.gridRow = `${slotIndex + 2} / span ${visibleSlots}`;
@@ -590,7 +591,7 @@
         createElement("span", "case-doctor", `แพทย์: ${item.doctor}`),
         createElement("span", "case-procedure", item.procedure),
         createElement("span", "case-anesthesia", `ระงับความรู้สึก: ${anesthesiaLabel}`),
-        createElement("span", "case-implant", `Implant: ${item.implant}`),
+        createElement("span", "case-implant", `Implant: ${implantLabel}`),
       );
       card.addEventListener("click", () => editCase(item.id));
       grid.append(card);
