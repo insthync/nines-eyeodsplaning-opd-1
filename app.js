@@ -590,7 +590,7 @@
         createElement("span", "case-doctor", `แพทย์: ${item.doctor}`),
         createElement("span", "case-procedure", item.procedure),
         createElement("span", "case-anesthesia", `ระงับความรู้สึก: ${anesthesiaLabel}`),
-        createElement("span", "case-implant", `Implant: ${implantLabel}`),
+        createElement("span", "case-implant", `Implant: ${item.implant}`),
       );
       card.addEventListener("click", () => editCase(item.id));
       grid.append(card);
