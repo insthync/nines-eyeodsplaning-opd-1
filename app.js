@@ -32,6 +32,12 @@
     regional: "ระงับความรู้สึกเฉพาะส่วน",
   };
 
+  const STATUS_CONFIRM_LABELS = {
+    "confirmed": "✅ Confirm",
+    "no-answer": "📞 ไม่รับสาย",
+    "cancelled": "❌ ยกเลิก",
+  }
+
   const elements = {
     addButton: document.querySelector("#add-case-button"),
     addButtonIcon: document.querySelector("#add-case-button path"),
@@ -577,6 +583,7 @@
         : item.patient_name;
       const anesthesiaLabel = ANESTHESIA_LABELS[item.anesthesia] || item.anesthesia;
       const implantLabel = item.implant ? item.implant : "-";
+      const statusConfirm = STATUS_CONFIRM_LABELS[item.statusConfirm] || item.statusConfirm;
       card.type = "button";
       card.style.gridColumn = item.operating_room === "OR 2" ? "3" : "2";
       card.style.gridRow = `${slotIndex + 2} / span ${visibleSlots}`;
@@ -586,7 +593,7 @@
       );
       card.title = `${patientSummary}\nแพทย์: ${item.doctor}\n${item.procedure}\nระงับความรู้สึก: ${anesthesiaLabel}`;
       card.append(
-        createElement("span", "case-time", `${item.start_time} · ${item.duration} นาที`),
+        createElement("span", "case-time", `${item.start_time} · ${item.duration} นาที · ${statusConfirm}`),
         createElement("strong", "case-patient", patientSummary),
         createElement("span", "case-doctor", `แพทย์: ${item.doctor}`),
         createElement("span", "case-procedure", item.procedure),
