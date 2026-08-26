@@ -1,13 +1,12 @@
 # Current handoff
 
-Last updated: 2026-07-26
+Last updated: 2026-08-26
 
 ## Repository state
 
 - Branch: `main`.
 - Remote: `origin` at `https://github.com/insthync/nines-eyeodsplaning-opd-1.git`.
-- Git history currently contains only the old initial commit.
-- The current application, PocketBase integration, scripts, and documentation are uncommitted working-tree changes. Run `git status --short`; do not assume a fresh clone contains this work until it is committed and pushed.
+- The recent Implant and confirmation-status feature commits are on `main`. The frontend `statusConfirm` submit/edit fix and its documentation may remain as working-tree changes until committed; always run `git status --short` before continuing.
 
 ## Implemented
 
@@ -15,8 +14,9 @@ Last updated: 2026-07-26
 - Daily, monthly, dashboard, and print views.
 - Monthly date cells show only the case count; patient and time previews are intentionally omitted to keep calendar rows uniform.
 - Daily timetable covers 08:00–21:00 with selectable start times through 20:30; 30-minute rows fit complete case-card details, and the time column stays fixed during horizontal scrolling.
-- Daily case cards show time/duration, patient name with optional HN, doctor, procedure, and anesthesia.
-- Add/edit/delete case forms and client-side overlap checks.
+- Daily case cards show time/duration with confirmation status, patient name with optional HN, doctor, procedure, anesthesia, and Implant.
+- Add/edit/delete case forms, Implant and confirmation-status fields, and client-side overlap checks.
+- Case create/update payloads send the required PocketBase `statusConfirm` field while normalized frontend records use `status_confirm` internally.
 - PocketBase REST adapter with session login and role-aware UI.
 - Signed-out header uses `#add-case-button` as the login entry point; the separate account-status chip appears only after login.
 - Dedicated Thai registration page linked from login; self-registration is forced to `viewer` by a PocketBase custom route.
@@ -42,6 +42,7 @@ Last updated: 2026-07-26
 - Case-card details at 1440 px and 390 px: 60- and 120-minute cards show time/duration, patient with HN, doctor, procedure, and anesthesia without content overflow or browser console errors.
 - Enlarged 30-minute rows at 800 px and 390 px: complete five-line cards fit without content overflow; longer cases remain proportional, schedule scrolling stays internal, and no browser console errors occur.
 - Monthly case-count-only cells with synthetic temporary data at 1265 px and 375 px: populated dates showed the correct counts, every calendar row had one consistent height, no patient/time preview elements were rendered, and there was no horizontal overflow or browser console error.
+- Implant/confirmation-status regression on a clean temporary PocketBase database: editor API create/update persisted `no-answer` and `cancelled`; browser create/edit showed the saved value and Implant on the case card; the edit form restored both fields at desktop and 390 px without horizontal overflow or console errors.
 - `git diff --check`.
 
 ## Open decisions and risks

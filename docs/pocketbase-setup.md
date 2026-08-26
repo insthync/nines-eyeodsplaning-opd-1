@@ -32,6 +32,8 @@ API rules ของ `surgery_cases` เปิด List และ View เป็�
 | `procedure` | Text | Yes | Max 2,000 |
 | `anesthesia` | Select | Yes | `general`, `local`, `regional` |
 | `status` | Select | Yes | `confirmed`, `waitlist`, `coordination` |
+| `implant` | Text | No | Max 2,000 |
+| `statusConfirm` | Select | Yes | `confirmed`, `no-answer`, `cancelled` |
 
 Migration เริ่มต้นอยู่ที่ `pocketbase/pb_migrations/1784737200_initial_or_planner_schema.js` และ migration `1784836072_public_surgery_case_reads.js` เปิดสิทธิ์อ่านแบบ public โดย setup/start script จะรัน migration ที่ยังไม่ถูกใช้
 

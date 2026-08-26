@@ -73,6 +73,8 @@ The migration is the source of truth for these rules. Frontend `writeRoles` must
 | `procedure` | text | Required, max 2,000 |
 | `anesthesia` | select | `general`, `local`, `regional` |
 | `status` | select | `confirmed`, `waitlist`, `coordination` |
+| `implant` | text | Optional, max 2,000 |
+| `statusConfirm` | select | `confirmed`, `no-answer`, `cancelled` |
 
 `schedule_conflicts.pb.js` rejects overlapping intervals in the same room and date for create and update requests. This is the authoritative server validation layer in the current design.
 

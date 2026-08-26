@@ -23,7 +23,9 @@ The design should feel calm, clinical, legible, and operational rather than deco
 
 ## Case form
 
-Required fields are surgery date, room, start time, duration, patient name, doctor, procedure, anesthesia, and status. HN is optional. Duration is 30–240 minutes.
+Required form fields are surgery date, room, start time, duration, patient name, doctor, procedure, anesthesia, planning status, Implant, and confirmation status. HN is optional. Duration is 30–240 minutes.
+
+Confirmation status values are `confirmed` (Confirm), `no-answer` (ไม่รับสาย), and `cancelled` (ยกเลิก). The PocketBase API field is named `statusConfirm`.
 
 The same room cannot contain overlapping cases. Show the conflict before submission, while also relying on server-side validation.
 
