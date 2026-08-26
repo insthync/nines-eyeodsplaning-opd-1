@@ -26,6 +26,7 @@ Last updated: 2026-08-26
 - Server hook rejecting overlapping room schedules.
 - Windows PowerShell and Linux/macOS Bash download/setup/start scripts.
 - Same-origin frontend/API serving suitable for a small VPS.
+- Shared frontend asset query timestamp in `index.html` and `register.html` for cache busting without a user hard refresh; every deployed code change must update all values together.
 - Repository-owned continuation context: `AGENTS.md`, `DESIGN.md`, focused `docs/`, and a portable Codex skill.
 
 ## Verified during implementation
@@ -43,6 +44,7 @@ Last updated: 2026-08-26
 - Enlarged 30-minute rows at 800 px and 390 px: complete five-line cards fit without content overflow; longer cases remain proportional, schedule scrolling stays internal, and no browser console errors occur.
 - Monthly case-count-only cells with synthetic temporary data at 1265 px and 375 px: populated dates showed the correct counts, every calendar row had one consistent height, no patient/time preview elements were rendered, and there was no horizontal overflow or browser console error.
 - Implant/confirmation-status regression on a clean temporary PocketBase database: editor API create/update persisted `no-answer` and `cancelled`; browser create/edit showed the saved value and Implant on the case card; the edit form restored both fields at desktop and 390 px without horizontal overflow or console errors.
+- Frontend cache-busting references: all seven CSS/JavaScript URLs across `index.html` and `register.html` use the shared `202608261307` timestamp, resolve to existing files, and returned HTTP 200 through PocketBase using a temporary data directory.
 - `git diff --check`.
 
 ## Open decisions and risks

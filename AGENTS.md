@@ -21,6 +21,7 @@ This repository is the source of truth for continuing the OR Planning Board acro
 - Keep overlap validation on both client and server. The server hook is authoritative.
 - Do not mutate or test against the user's real `pocketbase/pb_data` without explicit authorization. Use a temporary data directory.
 - Keep shell scripts LF-only and compatible with Linux/macOS Bash.
+- Whenever deployed code changes, update every frontend asset `?v=` timestamp in both `index.html` and `register.html`. Use one shared Asia/Bangkok timestamp in `YYYYMMDDHHmm` format.
 
 ## Validation baseline
 
@@ -38,4 +39,3 @@ There is no package manager, build step, or automated test suite yet.
 ## Keep the handoff current
 
 Update `docs/HANDOFF.md` after material changes. Update `DESIGN.md`, `docs/ARCHITECTURE.md`, `docs/SECURITY.md`, or `docs/OPERATIONS.md` whenever their contracts change.
-

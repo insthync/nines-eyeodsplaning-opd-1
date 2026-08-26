@@ -64,6 +64,10 @@ Still to implement before deployment:
 - Automated encrypted off-server backups and restore verification.
 - Monitoring, log retention, and upgrade/rollback procedure.
 
+## Frontend cache busting
+
+`index.html` and `register.html` append one shared `?v=YYYYMMDDHHmm` Asia/Bangkok timestamp to every frontend CSS and JavaScript URL. Whenever deployed code changes, update every one of those query values in both HTML files before deployment and deploy the HTML and referenced assets together. This makes the browser request the new asset URLs without requiring users to perform a hard refresh.
+
 ## Troubleshooting
 
 - If migrations fail, stop and inspect the full output; do not bypass them.
