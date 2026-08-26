@@ -83,7 +83,7 @@
     anesthesia: document.querySelector("#anesthesia"),
     status: document.querySelector("#status"),
     implant: document.querySelector("#implant"),
-    status_confirm: document.querySelector("#status-confirm"),
+    statusConfirm: document.querySelector("#status-confirm"),
     deleteModal: document.querySelector("#delete-modal"),
     keepCaseButton: document.querySelector("#keep-case-button"),
     confirmDeleteButton: document.querySelector("#confirm-delete-button"),
@@ -762,8 +762,8 @@
     elements.duration.value = "60";
     elements.anesthesia.value = "general";
     elements.status.value = "confirmed";
-    elements.implant.value = "",
-    elements.statusConfirm = "confirmed",
+    elements.implant.value = "";
+    elements.statusConfirm.value = "confirmed";
     clearFormError();
     showModal(elements.caseModal);
     window.setTimeout(() => elements.patientName.focus(), 20);
@@ -792,8 +792,8 @@
     elements.procedure.value = item.procedure;
     elements.anesthesia.value = item.anesthesia;
     elements.status.value = item.status;
-    elements.implant.value = item.implant,
-    elements.statusConfirm = item.statusConfirm,
+    elements.implant.value = item.implant;
+    elements.statusConfirm.value = item.status_confirm;
     clearFormError();
     showModal(elements.caseModal);
     window.setTimeout(() => elements.patientName.focus(), 20);
@@ -820,7 +820,7 @@
       anesthesia: elements.anesthesia.value,
       status: elements.status.value,
       implant: elements.implant.value,
-      status_confirm: elements.statusConfirm.value,
+      statusConfirm: elements.statusConfirm.value,
     };
   }
 
