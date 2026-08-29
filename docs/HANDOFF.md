@@ -1,6 +1,6 @@
 # Current handoff
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 ## Repository state
 
@@ -13,7 +13,7 @@ Last updated: 2026-08-26
 - Thai responsive OR planning board inspired by the original Canva site.
 - Daily, monthly, dashboard, and print views.
 - Monthly date cells show only the case count; patient and time previews are intentionally omitted to keep calendar rows uniform.
-- Daily timetable covers 08:00–21:00 with selectable start times through 20:30; 30-minute rows fit complete case-card details, and the time column stays fixed during horizontal scrolling.
+- Daily timetable covers 08:00–21:00 with selectable start times through 20:30; 30-minute rows are 128 px tall at desktop and narrow widths so all six case-card lines, including Implant, fit without clipping, and the time column stays fixed during horizontal scrolling.
 - Daily case cards show time/duration with confirmation status, patient name with optional HN, doctor, procedure, anesthesia, and Implant.
 - Add/edit/delete case forms, Implant and confirmation-status fields, and client-side overlap checks.
 - Case create/update payloads send the required PocketBase `statusConfirm` field while normalized frontend records use `status_confirm` internally.
@@ -41,10 +41,10 @@ Last updated: 2026-08-26
 - Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
 - Signed-out add/login control and signed-in add/account transition at desktop and 390 px widths, with no browser console errors or horizontal overflow.
 - Case-card details at 1440 px and 390 px: 60- and 120-minute cards show time/duration, patient with HN, doctor, procedure, and anesthesia without content overflow or browser console errors.
-- Enlarged 30-minute rows at 800 px and 390 px: complete five-line cards fit without content overflow; longer cases remain proportional, schedule scrolling stays internal, and no browser console errors occur.
+- Enlarged 30-minute rows with a temporary 30-minute Implant case at 1440 px and 390 px: complete six-line cards fit without vertical content overflow, Implant remains inside the card, longer cases remain proportional, schedule scrolling stays internal on narrow screens, the page has no horizontal overflow, and no browser console errors occur.
 - Monthly case-count-only cells with synthetic temporary data at 1265 px and 375 px: populated dates showed the correct counts, every calendar row had one consistent height, no patient/time preview elements were rendered, and there was no horizontal overflow or browser console error.
 - Implant/confirmation-status regression on a clean temporary PocketBase database: editor API create/update persisted `no-answer` and `cancelled`; browser create/edit showed the saved value and Implant on the case card; the edit form restored both fields at desktop and 390 px without horizontal overflow or console errors.
-- Frontend cache-busting references: all seven CSS/JavaScript URLs across `index.html` and `register.html` use the shared `202608261307` timestamp, resolve to existing files, and returned HTTP 200 through PocketBase using a temporary data directory.
+- Frontend cache-busting references: all seven CSS/JavaScript URLs across `index.html` and `register.html` use the shared `202608291245` timestamp, resolve to existing files, and returned HTTP 200 through PocketBase using a temporary data directory.
 - `git diff --check`.
 
 ## Open decisions and risks

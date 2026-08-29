@@ -22,7 +22,7 @@
   --danger: #c44b53;
   --danger-soft: #fdebed;
   --shadow: 0 24px 70px rgba(35, 73, 86, 0.13), 0 2px 8px rgba(35, 73, 86, 0.06);
-  --slot-height: 104px;
+  --slot-height: 128px;
 }
 
 * {
@@ -1258,7 +1258,7 @@ body.modal-open {
 }
 
 @media (max-width: 720px) {
-  :root { --slot-height: 96px; }
+  :root { --slot-height: 128px; }
 
   .app-shell {
     width: 100%;
