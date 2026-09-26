@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc">
+  <title id="title">เวลาทับซ้อนตรวจแยกตามวันและห้อง</title>
+  <desc id="desc">ในวันเดียวกัน OR 1 มีเคส 09:00 ถึง 10:00 เคสใหม่ 09:30 ถึง 10:30 ทับซ้อน เคสที่เริ่ม 10:00 ต่อได้ ส่วน OR 2 เวลา 09:00 ถึง 10:00 ใช้ได้หากห้องว่าง</desc>
+  <style>text{font-family:Tahoma,"Noto Sans Thai",sans-serif;fill:#193747;font-size:20px}.heading{font-size:30px;font-weight:bold}.small{font-size:18px}.label{font-weight:bold}.grid{stroke:#c9dcdf;stroke-dasharray:5 5}</style>
+  <rect width="1080" height="560" rx="20" fill="#eef8f8"/>
+  <text x="36" y="56" class="heading">เวลาทับซ้อน: ตรวจวันเดียวกัน ห้องเดียวกัน</text>
+  <text x="36" y="89" class="small">ตัวอย่างสมมติ • เปรียบเทียบแต่ละทางเลือกกับเคสเดิม</text>
+  <rect x="30" y="115" width="1020" height="324" rx="16" fill="white"/>
+  <text x="280" y="150">09:00</text><text x="450" y="150">09:30</text><text x="620" y="150">10:00</text><text x="790" y="150">10:30</text>
+  <path class="grid" d="M280 166V420M450 166V420M620 166V420M790 166V420M960 166V420"/>
+  <text x="51" y="202" class="label">OR 1 • เคสเดิม</text>
+  <rect x="280" y="174" width="340" height="42" rx="7" fill="#dbe8f3"/><text x="361" y="202">09:00–10:00</text>
+  <text x="51" y="266">OR 1 • ทับซ้อน</text>
+  <rect x="450" y="238" width="340" height="42" rx="7" fill="#fce0df"/><text x="529" y="266">09:30–10:30</text>
+  <text x="51" y="330">OR 1 • ต่อได้</text>
+  <rect x="620" y="302" width="170" height="42" rx="7" fill="#c5ede4"/><text x="635" y="330">10:00–10:30</text>
+  <text x="51" y="394">OR 2 • ถ้าห้องว่าง</text>
+  <rect x="280" y="366" width="340" height="42" rx="7" fill="#c5ede4"/><text x="361" y="394">09:00–10:00</text>
+  <text x="36" y="483" class="label">เริ่มตรงเวลาสิ้นสุดของเคสก่อนหน้าได้</text>
+  <text x="36" y="520">Confirm “ยกเลิก” ยังจองเวลาอยู่ และยังรวมในยอดเคสกับชั่วโมงใช้งาน</text>
+</svg>

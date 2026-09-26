@@ -6,6 +6,7 @@ Read this file after `AGENTS.md` when continuing the project on a new device or 
 
 | Document | Read when |
 | --- | --- |
+| [USER-GUIDE.md](USER-GUIDE.md) | Thai illustrated user guide: views, accounts, case management, conflicts, and printing |
 | `../DESIGN.md` | Changing UI, fields, terminology, responsive behavior, or workflows |
 | `ARCHITECTURE.md` | Changing frontend code, PocketBase schema, API behavior, or authentication |
 | `SECURITY.md` | Touching auth, permissions, hosting, backups, patient data, or secrets |

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="570" viewBox="0 0 1080 570" role="img" aria-labelledby="title desc">
+  <title id="title">เพิ่มเคสและตรวจผลหลังบันทึก</title>
+  <desc id="desc">เข้าสู่ระบบด้วย editor หรือ admin เลือกช่องว่างหรือปุ่มบวก กรอกข้อมูล ตรวจวันห้องเวลาและสถานะ บันทึก แล้วตรวจการ์ด หากเวลาทับซ้อนให้แก้ไขก่อนบันทึกใหม่</desc>
+  <style>text{font-family:Tahoma,"Noto Sans Thai",sans-serif;fill:#193747;font-size:20px}.heading{font-size:30px;font-weight:bold}.label{font-size:23px;font-weight:bold}.small{font-size:18px}.arrow{fill:none;stroke:#0f7185;stroke-width:3;marker-end:url(#arrow)}</style>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#0f7185"/></marker></defs>
+  <rect width="1080" height="570" rx="20" fill="#eef8f8"/>
+  <text x="36" y="56" class="heading">เพิ่มเคสและตรวจผลหลังบันทึก</text>
+  <text x="36" y="89" class="small">แผนภาพขั้นตอนสำหรับผู้จัดตารางและผู้ดูแล</text>
+  <g fill="white" stroke="#c9dcdf"><rect x="30" y="118" width="310" height="136" rx="16"/><rect x="385" y="118" width="310" height="136" rx="16"/><rect x="740" y="118" width="310" height="136" rx="16"/><rect x="740" y="318" width="310" height="136" rx="16"/><rect x="385" y="318" width="310" height="136" rx="16"/><rect x="30" y="318" width="310" height="136" rx="16"/></g>
+  <text x="53" y="158" class="label">1  เข้าสู่ระบบ</text><text x="53" y="197">ใช้บัญชี editor / admin</text><text x="53" y="230" class="small">ตรวจสิทธิ์ที่แถบชื่อบัญชี</text>
+  <text x="408" y="158" class="label">2  เลือกช่องว่าง / +</text><text x="408" y="197">เลือกวัน ห้อง และเวลา</text><text x="408" y="230" class="small">ช่องว่างเติมค่าเริ่มต้นให้</text>
+  <text x="763" y="158" class="label">3  กรอกข้อมูล</text><text x="763" y="197">กรอกทุกช่อง รวม Implant</text><text x="763" y="230" class="small">HN เป็นช่องไม่บังคับ</text>
+  <text x="763" y="358" class="label">4  ตรวจคิว</text><text x="763" y="397">วัน • ห้อง • เวลา • ระยะเวลา</text><text x="763" y="430" class="small">ตรวจสถานะและ Confirm</text>
+  <text x="408" y="358" class="label">5  บันทึกลงตาราง</text><text x="408" y="397">รอข้อความบันทึกสำเร็จ</text><text x="408" y="430" class="small">ถ้าทับซ้อน ให้แก้เวลาใหม่</text>
+  <text x="53" y="358" class="label">6  ตรวจการ์ด</text><text x="53" y="397">ระบบเปิดรายวันของเคสนั้น</text><text x="53" y="430" class="small">ตรวจวัน ห้อง และรายละเอียด</text>
+  <path class="arrow" d="M342 186H377M697 186H732M895 256V308M738 386H703M383 386H348"/>
+  <text x="36" y="511">ยังไม่ต้องการบันทึก: กด “ยกเลิก” หรือปิดหน้าต่าง</text>
+  <text x="36" y="543" class="small">การปิดแบบฟอร์มไม่ได้ยกเลิกนัดเดิม และไม่ได้เปลี่ยนสถานะ Confirm</text>
+</svg>

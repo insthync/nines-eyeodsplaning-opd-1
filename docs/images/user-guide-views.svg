@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="470" viewBox="0 0 1080 470" role="img" aria-labelledby="title desc">
+  <title id="title">เลือกมุมมองให้เหมาะกับงาน</title>
+  <desc id="desc">รายวันดูและจัดคิว รายเดือนเลือกวันจากจำนวนเคส ภาพรวมสรุปภาระงานรายเดือน ลูกศรเปลี่ยนวันในรายวันและเปลี่ยนเดือนในอีกสองมุมมอง</desc>
+  <style>text{font-family:Tahoma,"Noto Sans Thai",sans-serif;fill:#193747;font-size:20px}.heading{font-size:30px;font-weight:bold}.label{font-size:25px;font-weight:bold}.small{font-size:18px}.line{stroke:#c9dcdf;stroke-width:2}</style>
+  <rect width="1080" height="470" rx="20" fill="#eef8f8"/>
+  <text x="36" y="56" class="heading">เลือกมุมมองให้เหมาะกับงาน</text>
+  <text x="36" y="89" class="small">แผนภาพประกอบคู่มือ • ไม่ใช่ภาพหน้าจอจริง</text>
+  <g fill="white" stroke="#c9dcdf"><rect x="30" y="115" width="325" height="270" rx="16"/><rect x="377" y="115" width="325" height="270" rx="16"/><rect x="724" y="115" width="325" height="270" rx="16"/></g>
+  <text x="54" y="158" class="label">1  รายวัน</text>
+  <text x="401" y="158" class="label">2  รายเดือน</text>
+  <text x="748" y="158" class="label">3  ภาพรวม</text>
+  <g class="line"><path d="M54 203H331M54 236H331M54 269H331M113 177V289M222 177V289"/><path d="M401 209H678M401 249H678M470 179V285M539 179V285M608 179V285"/></g>
+  <text x="128" y="198" class="small">OR 1</text><text x="239" y="198" class="small">OR 2</text>
+  <rect x="119" y="211" width="97" height="50" rx="6" fill="#c5ede4"/>
+  <rect x="229" y="241" width="96" height="42" rx="6" fill="#fff0c5"/>
+  <rect x="478" y="217" width="53" height="27" rx="6" fill="#c5ede4"/>
+  <text x="483" y="238" class="small">2 เคส</text>
+  <rect x="749" y="190" width="274" height="25" rx="6" fill="#dceeee"/>
+  <rect x="749" y="230" width="196" height="25" rx="6" fill="#0f7185"/>
+  <rect x="749" y="270" width="135" height="18" rx="6" fill="#e6bd62"/>
+  <text x="54" y="326">ดูเวลา • เปิดการ์ด • จัดคิว</text>
+  <text x="54" y="358" class="small">ลูกศรเปลี่ยนทีละวัน</text>
+  <text x="401" y="326">ดูจำนวนเคส • กดเลือกวัน</text>
+  <text x="401" y="358" class="small">ลูกศรเปลี่ยนทีละเดือน</text>
+  <text x="748" y="326">ดูยอด • สถานะ • ชั่วโมง</text>
+  <text x="748" y="358" class="small">ลูกศรเปลี่ยนทีละเดือน</text>
+  <text x="36" y="431">ปุ่ม “วันนี้” กลับสู่วันหรือเดือนปัจจุบัน โดยยังคงมุมมองเดิม</text>
+</svg>

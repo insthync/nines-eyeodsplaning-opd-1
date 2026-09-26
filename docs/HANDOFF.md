@@ -1,6 +1,14 @@
 # Current handoff
 
-Last updated: 2026-08-29
+Last updated: 2026-09-26
+
+## Latest documentation update
+
+- Added `docs/USER-GUIDE.md`, a Thai end-user manual, with three standalone SVG diagrams in `docs/images/`. The illustrations are explanatory diagrams, not screenshots, and contain no patient data.
+- Linked the manual from `README.md` and `docs/INDEX.md`.
+- Checked the instructions against current frontend forms, navigation, permissions, refresh behavior, dashboard calculations, print CSS, and server overlap logic. In particular, cancelled confirmation still reserves time and counts in totals; print hides procedure text.
+- Documentation-only work; no frontend asset timestamp change is required. No real PocketBase data was accessed.
+- Validation: all local links/images in the manual resolve; all three SVG files parse as XML and have accessible titles/descriptions; `git diff --check` passes. No application code changed, so runtime/API tests were not rerun.
 
 ## Repository state
 
