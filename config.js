@@ -4,7 +4,7 @@ window.APP_CONFIG = Object.freeze({
   pocketBaseUrl: window.location.origin,
   collection: "surgery_cases",
   authCollection: "users",
-  requireAuth: false,
+  requireAuth: true,
   writeRoles: ["admin", "editor"],
   refreshIntervalMs: 30000,
 });

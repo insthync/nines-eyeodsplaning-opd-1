@@ -10,9 +10,9 @@
     <meta name="theme-color" content="#0f7185" />
     <title>OR Planning Board</title>
     <!-- Keep this cache-busting timestamp aligned with register.html after every deployed code change. -->
-    <link rel="stylesheet" href="./styles.css?v=202608291245" />
-    <script src="./config.js?v=202608291245" defer></script>
-    <script src="./app.js?v=202608291245" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=202610181300" />
+    <script src="./config.js?v=202610181300" defer></script>
+    <script src="./app.js?v=202610181300" defer></script>
   </head>
   <body>
     <div class="page-grid" aria-hidden="true"></div>
@@ -28,6 +28,7 @@
         <div class="header-actions">
           <button
             id="sync-status"
+            hidden
             class="sync-chip"
             type="button"
             aria-label="สถานะการจัดเก็บข้อมูล"
@@ -48,6 +49,7 @@
           </button>
           <button
             id="print-button"
+            hidden
             class="icon-button"
             type="button"
             aria-label="พิมพ์ตาราง"
@@ -61,6 +63,13 @@
         </div>
       </header>
 
+      <section id="login-notice" class="login-notice" aria-labelledby="login-notice-title">
+        <h2 id="login-notice-title">กรุณาเข้าสู่ระบบเพื่อดูตารางผ่าตัด</h2>
+        <p>ตารางนัดหมายและรายละเอียดเคสจะแสดงหลังเข้าสู่ระบบสำเร็จ</p>
+        <button id="board-login-button" class="button primary" type="button">เข้าสู่ระบบ</button>
+      </section>
+
+      <div id="board-content" hidden>
       <section class="planner-toolbar" aria-label="ตัวควบคุมตาราง">
         <nav class="view-switcher" aria-label="เลือกรูปแบบการแสดงตาราง">
           <button class="view-tab active" type="button" data-view="daily" aria-label="รายวัน" aria-pressed="true">
@@ -188,6 +197,7 @@
           </article>
         </div>
       </section>
+      </div>
     </main>
 
     <div id="case-modal" class="modal" hidden>

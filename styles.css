@@ -99,6 +99,20 @@ textarea:focus-visible {
   padding: 28px 28px 18px;
 }
 
+.login-notice {
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.login-notice h2 {
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+}
+
+.login-notice p {
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
 .title-wrap {
   min-width: 0;
 }
@@ -1270,19 +1284,29 @@ body.modal-open {
 
   .app-header {
     align-items: center;
+    flex-wrap: wrap;
     padding: 20px 16px 14px;
   }
 
-  .subtitle,
-  .sync-chip {
+  .subtitle {
     display: none;
+  }
+
+  .sync-chip {
+    min-width: 0;
+    flex: 1;
+  }
+
+  #sync-status-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   h1 { font-size: 1.42rem; }
 
   .eyebrow { font-size: 0.57rem; }
 
-  .header-actions { gap: 7px; }
+  .header-actions { width: 100%; gap: 7px; }
 
   .icon-button {
     width: 40px;

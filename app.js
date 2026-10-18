@@ -5,7 +5,7 @@
     pocketBaseUrl: window.location.origin,
     collection: "surgery_cases",
     authCollection: "users",
-    requireAuth: false,
+    requireAuth: true,
     writeRoles: ["admin", "editor"],
     refreshIntervalMs: 30000,
   };
@@ -39,6 +39,9 @@
   }
 
   const elements = {
+    boardContent: document.querySelector("#board-content"),
+    loginNotice: document.querySelector("#login-notice"),
+    boardLoginButton: document.querySelector("#board-login-button"),
     addButton: document.querySelector("#add-case-button"),
     addButtonIcon: document.querySelector("#add-case-button path"),
     printButton: document.querySelector("#print-button"),
@@ -105,6 +108,8 @@
     cases: [],
     editingId: null,
     loading: false,
+    boardReady: false,
+    loadVersion: 0,
     toastTimer: null,
   };
 
@@ -211,6 +216,25 @@
     logout() {
       this.auth = null;
       sessionStorage.removeItem(this.authKey);
+      clearBoard();
+    }
+
+    async refreshAuth() {
+      const session = this.auth;
+      let result;
+      try {
+        result = await this.request(
+          `/api/collections/${encodeURIComponent(this.authCollection)}/auth-refresh`,
+          { method: "POST" },
+        );
+      } catch (error) {
+        // A disabled account fails auth-refresh with 403, unlike a write denial.
+        if (error instanceof AuthorizationError && this.auth === session) this.logout();
+        throw error;
+      }
+      if (this.auth !== session) return;
+      Object.assign(session, { token: result.token, record: result.record });
+      sessionStorage.setItem(this.authKey, JSON.stringify(session));
     }
 
     async list() {
@@ -259,6 +283,7 @@
     }
 
     async request(path, options = {}) {
+      const session = this.auth;
       const headers = { ...(options.body ? { "Content-Type": "application/json" } : {}) };
       if (!options.skipAuth && this.auth?.token) headers.Authorization = this.auth.token;
       if (!options.skipAuth && this.requireAuth && !this.auth?.token) {
@@ -287,7 +312,7 @@
 
       if (!response.ok) {
         if (response.status === 401) {
-          if (!options.skipAuth) this.logout();
+          if (!options.skipAuth && this.auth === session) this.logout();
           throw new AuthenticationError(payload?.message || "บัญชีนี้ไม่มีสิทธิ์เข้าถึงข้อมูล");
         }
         if (response.status === 403) {
@@ -459,26 +484,47 @@
   }
 
   async function loadCases({ quiet = false } = {}) {
-    if (state.loading) return;
+    if (store.kind === "pocketbase" && !store.isAuthenticated) {
+      clearBoard();
+      return;
+    }
+    const version = ++state.loadVersion;
+    const session = store.auth;
     state.loading = true;
     if (!quiet) setSyncState("loading", "กำลังซิงก์ข้อมูล");
     try {
-      state.cases = (await store.list()).sort(compareCases);
+      if (store.kind === "pocketbase") await store.refreshAuth();
+      if (version !== state.loadVersion || session !== store.auth) return;
+      const cases = await store.list();
+      if (version !== state.loadVersion || session !== store.auth) return;
+      state.cases = cases.sort(compareCases);
+      state.boardReady = true;
       render();
       updateSyncLabel();
     } catch (error) {
+      if (session !== store.auth || version !== state.loadVersion) return;
       if (error instanceof AuthenticationError) {
-        state.cases = [];
-        render();
-        updateSyncLabel();
+        clearBoard();
         if (!quiet) openAuthModal();
       } else {
         setSyncState("error", "ยังไม่ได้เข้าสู่ระบบ");
         if (!quiet) showToast(error.message, "error");
       }
     } finally {
-      state.loading = false;
+      if (version === state.loadVersion) state.loading = false;
     }
+  }
+
+  function clearBoard() {
+    state.loadVersion += 1;
+    state.loading = false;
+    state.boardReady = false;
+    state.cases = [];
+    closeDeleteModal();
+    closeCaseModal();
+    elements.caseForm.reset();
+    render();
+    updateSyncLabel();
   }
 
   function compareCases(a, b) {
@@ -512,6 +558,19 @@
 
   function render() {
     updatePermissionState();
+    const visible = state.boardReady && store.isAuthenticated;
+    elements.boardContent.hidden = !visible;
+    elements.loginNotice.hidden = visible;
+    elements.printButton.hidden = !visible;
+    elements.printButton.disabled = !visible;
+    if (!visible) {
+      [elements.calendarGrid, elements.monthGrid, elements.statusBreakdown,
+        elements.busyDaysList, elements.roomUsage].forEach((element) => element.replaceChildren());
+      [elements.metricTotal, elements.metricConfirmed, elements.metricWaitlist,
+        elements.metricCoordination].forEach((element) => { element.textContent = "0"; });
+      elements.monthSummary.textContent = "";
+      return;
+    }
     updateDateDisplay();
     renderDailyView();
     renderMonthlyView();
@@ -965,6 +1024,7 @@
     elements.loginButton.disabled = true;
     try {
       await store.login(elements.authIdentity.value.trim(), elements.authPassword.value);
+      clearBoard();
       closeAuthModal();
       await loadCases();
       showToast("เข้าสู่ระบบเรียบร้อยแล้ว");
@@ -979,8 +1039,6 @@
   function logout() {
     if (store.kind !== "pocketbase") return;
     store.logout();
-    state.cases = [];
-    render();
     closeAuthModal();
     updateSyncLabel();
     showToast("ออกจากระบบแล้ว");
@@ -1014,6 +1072,7 @@
   }
 
   function bindEvents() {
+    elements.boardLoginButton.addEventListener("click", openAuthModal);
     elements.addButton.addEventListener("click", () => {
       if (store.kind === "pocketbase" && !store.isAuthenticated) {
         openAuthModal();
@@ -1021,7 +1080,9 @@
       }
       openCaseModal();
     });
-    elements.printButton.addEventListener("click", () => window.print());
+    elements.printButton.addEventListener("click", () => {
+      if (state.boardReady && store.isAuthenticated) window.print();
+    });
     elements.syncStatus.addEventListener("click", openAuthModal);
     elements.viewTabs.forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));
     elements.previousPeriod.addEventListener("click", () => changePeriod(-1));
@@ -1069,7 +1130,7 @@
 
     if (store.kind === "pocketbase" && Number(config.refreshIntervalMs) > 0) {
       window.setInterval(() => {
-        if (document.visibilityState === "visible" && (store.isAuthenticated || !config.requireAuth)) {
+        if (document.visibilityState === "visible" && store.isAuthenticated && !state.loading) {
           loadCases({ quiet: true });
         }
       }, Number(config.refreshIntervalMs));

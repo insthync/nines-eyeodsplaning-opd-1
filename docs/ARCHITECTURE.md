@@ -5,7 +5,7 @@
 ```text
 Browser
   ├─ index.html + styles.css + config.js + app.js
-  └─ Public read requests; write requests include a user auth token
+  └─ All case requests include a user auth token
                 │
                 ▼
 PocketBase 0.39.8
@@ -35,7 +35,8 @@ The normal configuration uses PocketBase. To intentionally use local-only storag
 1. The browser posts identity/password to `/api/collections/users/auth-with-password`.
 2. The returned record and token are stored in `sessionStorage` under a key scoped to the backend URL and auth collection.
 3. Subsequent requests send the token in `Authorization`.
-4. A 401 clears the browser session; a 403 preserves login and reports insufficient permission.
+4. Before every case load, auth-refresh validates the session and account status. A 401 clears the session; a 403 on auth-refresh also clears it (disabled account). A 403 on other operations reports insufficient permission.
+5. The board is hidden in HTML until a verified case load succeeds. Logout clears the rendered cases and case form. A request generation guard discards loads completed after logout or account switching.
 
 PocketBase superusers are only for setup, the PocketBase dashboard, and system administration. They must not be used by the web UI.
 
@@ -54,7 +55,7 @@ PocketBase superusers are only for setup, the PocketBase dashboard, and system a
 | `users` login | `active = true` |
 | Self-register a `users` record | Custom route forces active `viewer`; generic create remains superuser-only |
 | Read own `users` record | Authenticated record ID matches and active |
-| Read `surgery_cases` | Public, including unauthenticated guests |
+| Read `surgery_cases` | Active authenticated `users` account |
 | Create/update/delete `surgery_cases` | Active editor or admin |
 
 The migration is the source of truth for these rules. Frontend `writeRoles` must remain consistent with it.
@@ -85,6 +86,6 @@ The migration is the source of truth for these rules. Frontend `writeRoles` must
 - Test migrations against a new temporary data directory or an isolated copy before production.
 - Do not manually edit production collections without recording an equivalent migration.
 
-## Public-read configuration
+## Authenticated-read configuration
 
-`config.js` and the frontend default both set `requireAuth: false`. PocketBase list/view rules intentionally allow public reads, so guests can load the schedule and open case details without signing in. The browser still requires login before offering create or edit actions, and PocketBase write rules remain the authoritative boundary.
+`config.js` and the frontend default both set `requireAuth: true`. Migration `1792285200_require_authenticated_case_reads.js` restricts list/view rules to active authenticated `users`. Guests see a login prompt and no case data is requested. The explicit local-only demo mode remains without authentication and must not be used for shared patient data.

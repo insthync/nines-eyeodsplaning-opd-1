@@ -1,20 +1,24 @@
 # Current handoff
 
-Last updated: 2026-09-26
+Last updated: 2026-10-18
 
-## Latest documentation update
+## Latest change: login required for the board
 
-- Added `docs/USER-GUIDE.md`, a Thai end-user manual, with three standalone SVG diagrams in `docs/images/`. The illustrations are explanatory diagrams, not screenshots, and contain no patient data.
-- Linked the manual from `README.md` and `docs/INDEX.md`.
-- Checked the instructions against current frontend forms, navigation, permissions, refresh behavior, dashboard calculations, print CSS, and server overlap logic. In particular, cancelled confirmation still reserves time and counts in totals; print hides procedure text.
-- Documentation-only work; no frontend asset timestamp change is required. No real PocketBase data was accessed.
-- Validation: all local links/images in the manual resolve; all three SVG files parse as XML and have accessible titles/descriptions; `git diff --check` passes. No application code changed, so runtime/API tests were not rerun.
+- All planning views, navigation, and print controls stay hidden until an active user session is verified and case data loads. Guests see a Thai login prompt.
+- Logout clears cases, dashboard output, and case form contents. Pending loads cannot restore data after logout or an account switch.
+- Auth-refresh runs before every case load, including restored sessions and periodic refresh. Invalid sessions and disabled accounts clear the board; ordinary write-permission errors preserve login.
+- Mobile headers now keep the account control accessible for logout and account switching.
+- Added migration `1792285200_require_authenticated_case_reads.js` to restrict list/detail reads to active authenticated `users`; write permissions remain editor/admin only. Existing applied migrations were not changed.
+- All seven frontend CSS/JavaScript references use `202610181300` (Asia/Bangkok).
+- Validation: frontend/migration/hook JavaScript syntax; PowerShell script parsing; Bash syntax; git diff whitespace check. Temporary PocketBase API checks passed for guest/invalid-token read restrictions, viewer/editor/admin reads, guest/viewer write rejection, editor/admin create/update/delete, and disabled-account denial (auth-refresh returns 403).
+- Browser checks at 1440 px and 390 px passed for login, restored session, failed login, viewer/editor controls, monthly/dashboard views, logout, and periodic disabled-account clearing. No page overflow or browser console errors observed. Temporary async regression checks passed for no guest fetch, logout during a pending load, account-switch races, and stale 401 responses.
+- No real PocketBase data was accessed. Deployment still needs the frontend and new migration together; the normal start script applies pending migrations. No deployment was performed.
 
 ## Repository state
 
 - Branch: `main`.
 - Remote: `origin` at `https://github.com/insthync/nines-eyeodsplaning-opd-1.git`.
-- The recent Implant and confirmation-status feature commits are on `main`. The frontend `statusConfirm` submit/edit fix and its documentation may remain as working-tree changes until committed; always run `git status --short` before continuing.
+- The working tree was clean before the login-required change. The user requested committing and pushing this change to `origin/main`; verify current Git status and remote synchronization before continuing.
 
 ## Implemented
 
@@ -30,7 +34,7 @@ Last updated: 2026-09-26
 - Dedicated Thai registration page linked from login; self-registration is forced to `viewer` by a PocketBase custom route.
 - `viewer`, `editor`, and `admin` users.
 - PocketBase migration for `users` and `surgery_cases` rules/schema.
-- Public appointment reads for guests, viewers, editors, and admins; writes remain limited to active editors/admins.
+- Appointment reads require active authenticated users; writes remain limited to active editors/admins.
 - Server hook rejecting overlapping room schedules.
 - Windows PowerShell and Linux/macOS Bash download/setup/start scripts.
 - Same-origin frontend/API serving suitable for a small VPS.
@@ -43,7 +47,7 @@ Last updated: 2026-09-26
 - PowerShell parsing and script behavior.
 - Bash syntax, LF line endings, and a full Linux-container setup/start flow.
 - Migration and setup idempotency with temporary data.
-- Public-read migration on a clean temporary PocketBase database: guest, viewer, editor, and admin list/detail reads; guest/viewer writes rejected; editor/admin create, update, and delete allowed.
+- Historical public-read migration check (superseded by the authenticated-read checks above): guest, viewer, editor, and admin list/detail reads; guest/viewer writes rejected; editor/admin create, update, and delete allowed.
 - Registration API behavior: privilege fields cannot override `viewer`; generic public `users` creation remains locked.
 - Registration page submit/success flow at desktop and 390 px mobile width, with no browser console errors or horizontal overflow.
 - Browser UI role behavior when authentication was required: editor add enabled; viewer add disabled.
@@ -57,7 +61,7 @@ Last updated: 2026-09-26
 
 ## Open decisions and risks
 
-1. Public API reads expose all `surgery_cases` fields, including patient name, HN, procedure, doctor, and schedule data. Formal organizational privacy/security/compliance approval is required before storing real patient data; otherwise introduce a redacted public data model.
+1. Public self-registration still creates active viewers. They can read every case field after login; account admission needs an organizational decision before using real patient data.
 2. `editor` and `admin` currently have identical case permissions. Admin-only user management/audit features do not exist.
 3. No automated test suite or CI workflow exists.
 4. No production deployment files exist yet (`systemd`, Caddy, firewall, backup automation, monitoring).
@@ -66,7 +70,7 @@ Last updated: 2026-09-26
 
 ## Suggested next work
 
-1. Obtain an explicit privacy/security decision on publishing patient-identifying appointment fields, or implement a redacted public representation.
+1. Review account admission and self-registration before storing patient-identifying appointment fields.
 2. Review and commit the current working tree, then push it so another device can recover it.
 3. Add automated tests for overlap logic, role handling, and PocketBase API rules.
 4. Add a production deployment package for the selected host.
